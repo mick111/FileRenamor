@@ -13,6 +13,10 @@
 		412B2F0416306EC900E5251C /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 412B2F0216306EC900E5251C /* Credits.rtf */; };
 		412B2F0716306EC900E5251C /* FRAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 412B2F0616306EC900E5251C /* FRAppDelegate.m */; };
 		412B2F0A16306ECA00E5251C /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 412B2F0816306ECA00E5251C /* MainMenu.xib */; };
+		41521DCE1631CA5E0094E2E1 /* FRWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41521DCD1631CA5E0094E2E1 /* FRWindowController.m */; };
+		41521DD11631CB7B0094E2E1 /* FRModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 41521DD01631CB7B0094E2E1 /* FRModel.m */; };
+		41521DD41632F40E0094E2E1 /* FRSpecialToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 41521DD31632F40E0094E2E1 /* FRSpecialToken.m */; };
+		41521DD61632F9570094E2E1 /* FRCustomViewForCounter.xib in Resources */ = {isa = PBXBuildFile; fileRef = 41521DD51632F9570094E2E1 /* FRCustomViewForCounter.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +33,13 @@
 		412B2F0516306EC900E5251C /* FRAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FRAppDelegate.h; sourceTree = "<group>"; };
 		412B2F0616306EC900E5251C /* FRAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FRAppDelegate.m; sourceTree = "<group>"; };
 		412B2F0916306ECA00E5251C /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		41521DCC1631CA5E0094E2E1 /* FRWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRWindowController.h; sourceTree = "<group>"; };
+		41521DCD1631CA5E0094E2E1 /* FRWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRWindowController.m; sourceTree = "<group>"; };
+		41521DCF1631CB7B0094E2E1 /* FRModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRModel.h; sourceTree = "<group>"; };
+		41521DD01631CB7B0094E2E1 /* FRModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRModel.m; sourceTree = "<group>"; };
+		41521DD21632F40E0094E2E1 /* FRSpecialToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRSpecialToken.h; sourceTree = "<group>"; };
+		41521DD31632F40E0094E2E1 /* FRSpecialToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRSpecialToken.m; sourceTree = "<group>"; };
+		41521DD51632F9570094E2E1 /* FRCustomViewForCounter.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FRCustomViewForCounter.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,7 +95,14 @@
 			children = (
 				412B2F0516306EC900E5251C /* FRAppDelegate.h */,
 				412B2F0616306EC900E5251C /* FRAppDelegate.m */,
+				41521DCC1631CA5E0094E2E1 /* FRWindowController.h */,
+				41521DCD1631CA5E0094E2E1 /* FRWindowController.m */,
+				41521DCF1631CB7B0094E2E1 /* FRModel.h */,
+				41521DD01631CB7B0094E2E1 /* FRModel.m */,
 				412B2F0816306ECA00E5251C /* MainMenu.xib */,
+				41521DD51632F9570094E2E1 /* FRCustomViewForCounter.xib */,
+				41521DD21632F40E0094E2E1 /* FRSpecialToken.h */,
+				41521DD31632F40E0094E2E1 /* FRSpecialToken.m */,
 				412B2EFA16306EC900E5251C /* Supporting Files */,
 			);
 			path = FileRenamor;
@@ -157,6 +175,7 @@
 				412B2EFE16306EC900E5251C /* InfoPlist.strings in Resources */,
 				412B2F0416306EC900E5251C /* Credits.rtf in Resources */,
 				412B2F0A16306ECA00E5251C /* MainMenu.xib in Resources */,
+				41521DD61632F9570094E2E1 /* FRCustomViewForCounter.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -169,6 +188,9 @@
 			files = (
 				412B2F0016306EC900E5251C /* main.m in Sources */,
 				412B2F0716306EC900E5251C /* FRAppDelegate.m in Sources */,
+				41521DCE1631CA5E0094E2E1 /* FRWindowController.m in Sources */,
+				41521DD11631CB7B0094E2E1 /* FRModel.m in Sources */,
+				41521DD41632F40E0094E2E1 /* FRSpecialToken.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -226,7 +248,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 			};
@@ -250,7 +272,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				SDKROOT = macosx;
 			};
 			name = Release;
@@ -262,6 +284,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "FileRenamor/FileRenamor-Prefix.pch";
 				INFOPLIST_FILE = "FileRenamor/FileRenamor-Info.plist";
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -274,6 +297,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "FileRenamor/FileRenamor-Prefix.pch";
 				INFOPLIST_FILE = "FileRenamor/FileRenamor-Info.plist";
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -298,6 +322,7 @@
 				412B2F0F16306ECA00E5251C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

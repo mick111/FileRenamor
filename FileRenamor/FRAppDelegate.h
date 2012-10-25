@@ -7,9 +7,10 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "FRWindowController.h"
 
 @interface FRAppDelegate : NSObject <NSApplicationDelegate>
-
 @property (assign) IBOutlet NSWindow *window;
+@property (unsafe_unretained) IBOutlet FRWindowController *windowController;
 
 @end

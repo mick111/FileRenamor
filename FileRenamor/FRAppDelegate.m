@@ -8,11 +8,20 @@
 
 #import "FRAppDelegate.h"
 
-@implementation FRAppDelegate
 
+@interface FRAppDelegate()
+@end
+
+
+@implementation FRAppDelegate
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     // Insert code here to initialize your application
+    self.windowController.window = self.window;
 }
 
+- (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)theApplication
+{
+    return YES;
+}
 @end
