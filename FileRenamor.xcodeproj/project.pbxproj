@@ -40,6 +40,7 @@
 		41521DD21632F40E0094E2E1 /* FRSpecialToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRSpecialToken.h; sourceTree = "<group>"; };
 		41521DD31632F40E0094E2E1 /* FRSpecialToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRSpecialToken.m; sourceTree = "<group>"; };
 		41521DD51632F9570094E2E1 /* FRCustomViewForCounter.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FRCustomViewForCounter.xib; sourceTree = "<group>"; };
+		41EDF151163BFDE200CC5F89 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = text; path = README.md; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,6 +112,7 @@
 		412B2EFA16306EC900E5251C /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				41EDF151163BFDE200CC5F89 /* README.md */,
 				412B2EFB16306EC900E5251C /* FileRenamor-Info.plist */,
 				412B2EFC16306EC900E5251C /* InfoPlist.strings */,
 				412B2EFF16306EC900E5251C /* main.m */,
