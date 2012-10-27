@@ -11,6 +11,10 @@
 
 @class FRFile;
 
+#define FRSOURCEDATE_NOW          0
+#define FRSOURCEDATE_MODIFICATION 2
+#define FRSOURCEDATE_CREATION     1
+
 @interface FRSpecialToken : NSViewController
 typedef enum FRTokenType_t {
     FRTokenTypeUser = 0,
@@ -36,12 +40,9 @@ typedef enum FRTokenType_t {
 @property (assign) NSUInteger
 counterNbIterationsNeededToIncrement;
 
-/* Day Properties */
-@property (assign) NSDateFormatterStyle dateFormaterStyleDay;
-/* Month Properties */
-@property (assign) NSDateFormatterStyle dateFormaterStyleMonth;
-/* Year Properties */
-@property (assign) NSDateFormatterStyle dateFormaterStyleYear;
+/* DateFormat Properties */
+@property (strong) NSString * dateFormat;
+@property (assign) NSUInteger dateSource;
 
 /* FileName Properties */
 @property (assign) BOOL fileNameWithExtension;

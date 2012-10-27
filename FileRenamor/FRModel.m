@@ -17,6 +17,24 @@
 @synthesize icon = _icon;
 @synthesize url;
 
+-(NSDate *)creationDate
+{
+    NSError * error;
+    NSFileWrapper * fileWrapper = [[NSFileWrapper alloc] initWithURL:self.url
+                                                             options:NSFileWrapperReadingImmediate
+                                                               error:&error];
+    return fileWrapper.fileAttributes.fileCreationDate;
+}
+
+-(NSDate *)modificationDate
+{
+    NSError * error;
+    NSFileWrapper * fileWrapper = [[NSFileWrapper alloc] initWithURL:self.url
+                                                             options:NSFileWrapperReadingImmediate
+                                                               error:&error];
+    return fileWrapper.fileAttributes.fileModificationDate;
+}
+
 -(NSImage *)icon
 {
     if (!_icon)
@@ -97,13 +115,6 @@
     return [[FRFile alloc] initWithURL:newUrl];
 }
 @end
-
-
-
-
-
-
-
 
 @interface FRModel()
 {

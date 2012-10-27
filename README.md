@@ -8,7 +8,6 @@ To be done :
 - drag and drop files/folders/recursive folder
 - add folder content
 - add folder content recursively
-- date formats and examples 
 - extension in file names
 - dot or not in extension
 - effective renaming

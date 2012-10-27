@@ -19,6 +19,9 @@
 
 @property (strong) NSURL * url;
 
+@property (readonly) NSDate * creationDate;
+@property (readonly) NSDate * modificationDate;
+
 
 @property (readonly) NSString * originalFileNameBaseName;
 @property (readonly) NSString * originalFileNameExtension;
