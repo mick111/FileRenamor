@@ -8,8 +8,6 @@ To be done :
 - drag and drop files/folders/recursive folder
 - add folder content
 - add folder content recursively
-- extension in file names
-- dot or not in extension
 - effective renaming
 - instant name calculation (when token field is modified, when regex field is modified, when table view is modified)
 - delete elements from tableView

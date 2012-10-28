@@ -47,7 +47,10 @@ counterNbIterationsNeededToIncrement;
 /* FileName Properties */
 @property (assign) BOOL fileNameWithExtension;
 
-@property (assign) FRTokenType tokenType;
+/* Extension Properties */
+@property (assign) BOOL extensionIncludesDot;
+
+@property (assign, readonly) FRTokenType tokenType;
 @property (strong) NSMenu * menu;
 
 

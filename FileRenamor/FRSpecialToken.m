@@ -12,7 +12,7 @@
 
 @implementation FRSpecialToken
 
-@synthesize tokenType;
+@synthesize tokenType = _tokenType;
 
 +(FRTokenType) tokenTypeForString:(NSString *)string
 {
@@ -68,7 +68,6 @@
     NSMenuItem * subMenuItem = [menuItem.submenu addItemWithTitle:dateFormatExample
                                                            action:@selector(setFormatDate:)
                                                     keyEquivalent:@""];
-    //[subMenuItem setValue:dateFormat forUndefinedKey:@"DateFormat"];
     subMenuItem.target = self;
     [subMenuItem setEnabled:TRUE];
     
@@ -81,7 +80,7 @@
     if (self)
     {
         
-        self.tokenType = [[self class] tokenTypeForString:string];
+        _tokenType = [[self class] tokenTypeForString:string];
         
         self.string = [[NSString alloc] initWithString:string];
         
@@ -100,7 +99,7 @@
                                                        bundle:nil];
                 NSArray * arrayOfViews;
                 if (![nib instantiateNibWithOwner:self
-                             topLevelObjects:&arrayOfViews])
+                                  topLevelObjects:&arrayOfViews])
                 {
                     NSLog(@"Cannot instanciate view from FRCustomViewForCounter");
                     return nil;
@@ -213,12 +212,67 @@
                 }
             }
                 break;
+            case FRTokenTypeFileName:
+            {
+                /* Setting default Values for Token */
+                self.fileNameWithExtension = YES;
+                
+                /* Setting Menu for Token */
+                self.menu = [[NSMenu alloc] initWithTitle:@"FileName Format Menu"];
+                
+                self.menu.autoenablesItems = NO;
+                
+                NSMenuItem * menuItem = [self.menu addItemWithTitle:@"include extension"
+                                                             action:@selector(toogleFileNameWithExtension:)
+                                                      keyEquivalent:@""];
+                menuItem.target = self;
+                menuItem.enabled = TRUE;
+                menuItem.state = NSOnState;
+            }
+                break;
+            case FRTokenTypeFileExtension:
+            {
+                /* Setting default Values for Token */
+                self.extensionIncludesDot = NO;
+                
+                /* Setting Menu for Token */
+                self.menu = [[NSMenu alloc] initWithTitle:@"Extension Format Menu"];
+                
+                self.menu.autoenablesItems = NO;
+                
+                NSMenuItem * menuItem = [self.menu addItemWithTitle:@"include dot"
+                                                             action:@selector(toogleExtensionIncludesDot:)
+                                                      keyEquivalent:@""];
+                menuItem.target = self;
+                menuItem.enabled = TRUE;
+                menuItem.state = NSOffState;
+                
+            }
+                break;
             default:
                 self.menu = nil;
                 break;
         }
     }
     return self;
+}
+
+-(void)toogleExtensionIncludesDot:(NSMenuItem *)sender
+{
+    /* Update Token property */
+    self.extensionIncludesDot = !self.extensionIncludesDot;
+    
+    /* Update Menu */
+    sender.state = (self.extensionIncludesDot) ? NSOnState : NSOffState;
+}
+
+-(void)toogleFileNameWithExtension:(NSMenuItem *)sender
+{
+    /* Update Token property */
+    self.fileNameWithExtension = !self.fileNameWithExtension;
+    
+    /* Update Menu */
+    sender.state = (self.fileNameWithExtension) ? NSOnState : NSOffState;
 }
 
 -(void)setFormatDate:(NSMenuItem *)sender
@@ -283,7 +337,8 @@
     return self.string;
 }
 
--(NSString *)getStringValueForFile:(FRFile*)file atRow:(NSUInteger)fileNumber
+-(NSString *)getStringValueForFile:(FRFile*)file
+                             atRow:(NSUInteger)fileNumber
 {
     switch (self.tokenType) {
         case FRTokenTypeCounter:
@@ -296,20 +351,24 @@
         }
             break;
         case FRTokenTypeUser:
+        {
             return self.string;
+        }
             break;
         case FRTokenTypeFileExtension:
         {
-            return file.originalFileNameExtension;
+            if (self.extensionIncludesDot)
+                return [@"." stringByAppendingString:file.originalFileNameExtension];
+            else
+                return file.originalFileNameExtension;
         }
             break;
         case FRTokenTypeFileName:
         {
             if (self.fileNameWithExtension)
-            {
                 return file.originalFileName;
-            }
-            return file.originalFileNameBaseName;
+            else
+                return file.originalFileNameBaseName;
         }
             break;
         case FRTokenTypeFileGroupName:
