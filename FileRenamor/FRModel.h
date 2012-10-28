@@ -31,8 +31,10 @@
 
 @interface FRModel : NSObject
 
-/* Return true if all files are url */
-- (BOOL)addFilesToArrayOfUrls:(NSArray *)urls;
+/* Return the number of elements added */
+- (NSUInteger)addFilesToArrayOfUrls:(NSArray *)urls;
+- (NSUInteger)addFilesToArrayOfUrls:(NSArray *)urls
+                            atIndex:(NSUInteger)index;
 
 /* Return true if okay */
 - (BOOL)addFileToArrayOfUrls:(NSURL *)url atIndex:(NSUInteger)index;

@@ -12,7 +12,7 @@
 
 @implementation FRWindowController
 
-#define MyPrivateTableViewDataType @"MyPrivateTableViewDataType"
+#define FRPrivateTableViewDataType @"MyPrivateTableViewDataType"
 
 - (id)initWithWindow:(NSWindow *)window
 {
@@ -31,7 +31,7 @@
     
     // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
     [self.tableView registerForDraggedTypes:
-     [NSArray arrayWithObject:MyPrivateTableViewDataType]];
+     [NSArray arrayWithObjects:FRPrivateTableViewDataType, NSFilenamesPboardType, nil]];
     
 }
 
@@ -176,9 +176,9 @@ writeRowsWithIndexes:(NSIndexSet *)rowIndexes
     // Copy the row numbers to the pasteboard.
     NSData *zNSIndexSetData =
     [NSKeyedArchiver archivedDataWithRootObject:rowIndexes];
-    [pboard declareTypes:[NSArray arrayWithObject:MyPrivateTableViewDataType]
+    [pboard declareTypes:[NSArray arrayWithObject:FRPrivateTableViewDataType]
                    owner:self];
-    [pboard setData:zNSIndexSetData forType:MyPrivateTableViewDataType];
+    [pboard setData:zNSIndexSetData forType:FRPrivateTableViewDataType];
     return YES;
 }
 
@@ -197,21 +197,45 @@ writeRowsWithIndexes:(NSIndexSet *)rowIndexes
               row:(NSInteger)row
     dropOperation:(NSTableViewDropOperation)dropOperation
 {
-    
+    BOOL accepted = NO;
     NSPasteboard* pboard = [info draggingPasteboard];
-    NSData* rowData = [pboard dataForType:MyPrivateTableViewDataType];
-    NSIndexSet* rowIndexes =
-    [NSKeyedUnarchiver unarchiveObjectWithData:rowData];
     
-    NSIndexSet * result = [model moveFilesFromPositions:rowIndexes
-                                             toPosition:row];
-    if (result.count)
+    NSLog(@"%@", pboard.types);
+    
+    if ([[pboard types] containsObject:NSFilenamesPboardType])
     {
-        [tableview reloadData];
-        [tableview selectRowIndexes:result byExtendingSelection:FALSE];
+        NSArray * arrayOfPaths = [pboard propertyListForType:NSFilenamesPboardType];
         
+        NSMutableArray * arrayOfURLs = [[NSMutableArray alloc] initWithCapacity:arrayOfPaths.count];
+        for (NSString * path in arrayOfPaths)
+        {
+            NSURL * url = [NSURL fileURLWithPath:path];
+            [arrayOfURLs addObject:url];
+        }
+        
+        accepted |= [model addFilesToArrayOfUrls:arrayOfURLs
+                                         atIndex:row];
+        [tableview reloadData];
     }
-    return (result.count > 0);
+    if ([[pboard types] containsObject:FRPrivateTableViewDataType])
+    {
+        NSData* rowData = [pboard dataForType:FRPrivateTableViewDataType];
+        
+        NSIndexSet* rowIndexes =
+        [NSKeyedUnarchiver unarchiveObjectWithData:rowData];
+        
+        NSIndexSet * result = [model moveFilesFromPositions:rowIndexes
+                                                 toPosition:row];
+        if (result.count)
+        {
+            [tableview reloadData];
+            [tableview selectRowIndexes:result byExtendingSelection:FALSE];
+            
+        }
+        accepted |= (result.count > 0);
+    }
+    
+    return accepted;
 }
 
 

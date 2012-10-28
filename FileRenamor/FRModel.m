@@ -19,55 +19,49 @@
 
 -(NSDate *)creationDate
 {
+    NSDate * creationDate;
     NSError * error;
-    NSFileWrapper * fileWrapper = [[NSFileWrapper alloc] initWithURL:self.url
-                                                             options:NSFileWrapperReadingImmediate
-                                                               error:&error];
-    return fileWrapper.fileAttributes.fileCreationDate;
+    [self.url getResourceValue:&creationDate
+                        forKey:NSURLCreationDateKey
+                         error:&error];
+    return creationDate;
 }
 
 -(NSDate *)modificationDate
 {
+    NSDate * modificationDate;
     NSError * error;
-    NSFileWrapper * fileWrapper = [[NSFileWrapper alloc] initWithURL:self.url
-                                                             options:NSFileWrapperReadingImmediate
-                                                               error:&error];
-    return fileWrapper.fileAttributes.fileModificationDate;
+    [self.url getResourceValue:&modificationDate
+                        forKey:NSURLContentModificationDateKey
+                         error:&error];
+    return modificationDate;
 }
 
 -(NSImage *)icon
 {
-    if (!_icon)
-    {
-        NSError * error;
-        NSFileWrapper * fileWrapper = [[NSFileWrapper alloc] initWithURL:self.url
-                                                                 options:NSFileWrapperReadingImmediate
-                                                                   error:&error];
-        _icon = fileWrapper.icon;
-    }
+    NSWorkspace * ws = [NSWorkspace sharedWorkspace];
+    _icon = [ws iconForFile:self.url.path];
     return _icon;
 }
 
 -(NSString *)originalFileName
 {
-    if (!_originalFileName)
-    {
-        NSError * error;
-        NSFileWrapper * fileWrapper = [[NSFileWrapper alloc] initWithURL:self.url
-                                                                 options:NSFileWrapperReadingImmediate
-                                                                   error:&error];
-        _originalFileName = fileWrapper.filename;
-    }
+    NSError * error;
+    NSString * fileName;
+    [self.url getResourceValue:&fileName
+                        forKey:NSURLNameKey
+                         error:&error];
+    _originalFileName = fileName;
     return _originalFileName;
 }
 
 -(void)applyNewFileName
 {
-    NSError * error;
-    NSFileWrapper * fileWrapper = [[NSFileWrapper alloc] initWithURL:self.url
-                                                             options:NSFileWrapperReadingImmediate
-                                                               error:&error];
-    fileWrapper.filename = _newFileName;
+//    NSError * error;
+//    NSFileWrapper * fileWrapper = [[NSFileWrapper alloc] initWithURL:self.url
+//                                                             options:NSFileWrapperReadingImmediate
+//                                                               error:&error];
+//    fileWrapper.filename = _newFileName;
 }
 
 -(void)setNewFileName:(NSString *)newFileName
@@ -145,31 +139,29 @@
 }
 
 /* Return true if all files are added */
-- (BOOL)addFilesToArrayOfUrls:(NSArray *)urls
+- (NSUInteger)addFilesToArrayOfUrls:(NSArray *)urls
 {
-    BOOL allURLs = TRUE;
+    return [self addFilesToArrayOfUrls:urls atIndex:_arrayOfFiles.count];
+}
+- (NSUInteger)addFilesToArrayOfUrls:(NSArray *)urls
+                      atIndex:(NSUInteger)index
+{
+    if (index > _arrayOfFiles.count) return 0;
+    
     NSMutableArray * urlsToAdd = [NSMutableArray arrayWithArray:urls];
-    NSUInteger nbOfFiles = _arrayOfFiles.count;
+    NSUInteger nbOfFiles = index;
     for (id url in urlsToAdd)
     {
         if ([url isKindOfClass:[NSURL class]])
         {
-            if ([self addFileToArrayOfUrls:url atIndex:nbOfFiles])
+            if ([self addFileToArrayOfUrls:url
+                                   atIndex:nbOfFiles])
             {
                 nbOfFiles++;
             }
-            else
-            {
-                allURLs = FALSE;
-            }
-        }
-        else
-        {
-            [urlsToAdd removeObject:url];
-            allURLs = FALSE;
         }
     }
-    return allURLs;
+    return (nbOfFiles - index);
 }
 
 /* Return true if okay */
