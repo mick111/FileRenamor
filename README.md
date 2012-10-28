@@ -12,7 +12,7 @@ To be done :
 - dot or not in extension
 - effective renaming
 - instant name calculation (when token field is modified, when regex field is modified, when table view is modified)
-- element already present in table view
+- delete elements from tableView
 
 Known bugs
 - all rows are deselected when checkbox is clicked (???)

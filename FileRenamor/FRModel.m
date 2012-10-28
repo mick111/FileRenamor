@@ -144,19 +144,28 @@
     return self;
 }
 
-/* Return true if all files are url */
+/* Return true if all files are added */
 - (BOOL)addFilesToArrayOfUrls:(NSArray *)urls
 {
     BOOL allURLs = TRUE;
-    for (id url in urls)
+    NSMutableArray * urlsToAdd = [NSMutableArray arrayWithArray:urls];
+    NSUInteger nbOfFiles = _arrayOfFiles.count;
+    for (id url in urlsToAdd)
     {
         if ([url isKindOfClass:[NSURL class]])
         {
-            FRFile * file = [FRFile fileWithURL:url];
-            [_arrayOfFiles addObject:file];
+            if ([self addFileToArrayOfUrls:url atIndex:nbOfFiles])
+            {
+                nbOfFiles++;
+            }
+            else
+            {
+                allURLs = FALSE;
+            }
         }
         else
         {
+            [urlsToAdd removeObject:url];
             allURLs = FALSE;
         }
     }
@@ -166,6 +175,14 @@
 /* Return true if okay */
 - (BOOL)addFileToArrayOfUrls:(NSURL *)url atIndex:(NSUInteger)index
 {
+    for (FRFile * existingUrl in _arrayOfFiles) {
+        if ([url isEqual:existingUrl.url])
+        {
+            //URL is already present
+            return FALSE;
+        }
+    }
+    
     if (index <= _arrayOfFiles.count)
     {
         FRFile * file = [FRFile fileWithURL:url];
