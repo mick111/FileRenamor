@@ -43,6 +43,7 @@
 		41521DD51632F9570094E2E1 /* FRCustomViewForCounter.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FRCustomViewForCounter.xib; sourceTree = "<group>"; };
 		41EDF151163BFDE200CC5F89 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = text; path = README.md; sourceTree = SOURCE_ROOT; };
 		41EDF152163D687500CC5F89 /* FRCustomViewForFileName.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FRCustomViewForFileName.xib; sourceTree = "<group>"; };
+		41EDF155163D76E400CC5F89 /* FileRenamor.app */ = {isa = PBXFileReference; lastKnownFileType = wrapper.application; path = FileRenamor.app; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +64,7 @@
 				412B2EF916306EC900E5251C /* FileRenamor */,
 				412B2EF216306EC900E5251C /* Frameworks */,
 				412B2EF016306EC900E5251C /* Products */,
+				41EDF154163D76E400CC5F89 /* build */,
 			);
 			sourceTree = "<group>";
 		};
@@ -123,6 +125,15 @@
 				412B2F0216306EC900E5251C /* Credits.rtf */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		41EDF154163D76E400CC5F89 /* build */ = {
+			isa = PBXGroup;
+			children = (
+				41EDF155163D76E400CC5F89 /* FileRenamor.app */,
+			);
+			name = build;
+			path = FileRenamor/build;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
