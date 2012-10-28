@@ -37,6 +37,26 @@
 
 - (IBAction)rename:(id)sender
 {
+    if ([model calculateAllNewNamesWithTokens:_fileNameFormatTokenField.objectValue])
+    {
+        /* Confirmation dialog */
+        /* Have changed from last preview, continue? */
+        if (![[NSAlert alertWithMessageText:@"New names have changed from your last preview, continue?"
+                        defaultButton:@"Yes, rename !"
+                      alternateButton:@"No..."
+                          otherButton:nil
+            informativeTextWithFormat:@""] runModal])
+            return;
+    }
+    /* Operation cannot be undone, continue ? */
+    if (![[NSAlert alertWithMessageText:@"This operation cannot be undone, continue?"
+                    defaultButton:@"Yes, rename!"
+                  alternateButton:@"No..."
+                      otherButton:nil
+        informativeTextWithFormat:@"Warning: If two files have the same final name, the second will not be renamed."] runModal])
+        return;
+    [model applyRenaming];
+    [self.tableView reloadData];
 }
 
 - (IBAction)remove:(id)sender
@@ -270,7 +290,8 @@ writeRowsWithIndexes:(NSIndexSet *)rowIndexes
     return (token.menu != nil);
 }
 
-- (id)tokenField:(NSTokenField *)tokenField representedObjectForEditingString:(NSString *)editingString
+- (id)tokenField:(NSTokenField *)tokenField
+representedObjectForEditingString:(NSString *)editingString
 {
     FRSpecialToken * token = [[FRSpecialToken alloc] initWithString:editingString];
     NSLog(@"F : %s / %@", __FUNCTION__, editingString);

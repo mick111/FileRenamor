@@ -57,11 +57,16 @@
 
 -(void)applyNewFileName
 {
-//    NSError * error;
-//    NSFileWrapper * fileWrapper = [[NSFileWrapper alloc] initWithURL:self.url
-//                                                             options:NSFileWrapperReadingImmediate
-//                                                               error:&error];
-//    fileWrapper.filename = _newFileName;
+    NSError * error = nil;
+    NSURL * newURL = [NSURL URLWithString:self.newFileName
+                            relativeToURL:self.url.URLByDeletingLastPathComponent];
+    [[NSFileManager defaultManager] moveItemAtURL:self.url
+                                            toURL:newURL
+                                            error:&error];
+    if (!error)
+    {
+        self.url = newURL;
+    }
 }
 
 -(void)setNewFileName:(NSString *)newFileName
@@ -144,7 +149,7 @@
     return [self addFilesToArrayOfUrls:urls atIndex:_arrayOfFiles.count];
 }
 - (NSUInteger)addFilesToArrayOfUrls:(NSArray *)urls
-                      atIndex:(NSUInteger)index
+                            atIndex:(NSUInteger)index
 {
     if (index > _arrayOfFiles.count) return 0;
     
@@ -168,7 +173,7 @@
 - (BOOL)addFileToArrayOfUrls:(NSURL *)url atIndex:(NSUInteger)index
 {
     for (FRFile * existingUrl in _arrayOfFiles) {
-        if ([url isEqual:existingUrl.url])
+        if ([url.absoluteURL isEqual:existingUrl.url.absoluteURL])
         {
             //URL is already present
             return FALSE;
@@ -275,12 +280,14 @@
         [self fileAtIndex:index].selected = newSelection;
 }
 
--(void)calculateAllNewNamesWithTokens:(NSArray *)arrayOfTokens
+-(BOOL)calculateAllNewNamesWithTokens:(NSArray *)arrayOfTokens
 {
     NSLog(@"%s : %@", __FUNCTION__, arrayOfTokens);
     NSUInteger currentFileNb = 0;
+    BOOL fileNameHaveChanged = NO;
     for (FRFile * file in _arrayOfFiles)
     {
+        NSString * oldNewFileName = file.newFileName;
         file.newFileName = @"";
         if (!file.selected)
         {
@@ -290,9 +297,39 @@
         {
             NSString * newString = [token getStringValueForFile:file
                                                           atRow:currentFileNb];
-            file.newFileName = [file.newFileName stringByAppendingString:newString];
+            if (newString)
+                file.newFileName = [file.newFileName stringByAppendingString:newString];
         }
         currentFileNb++;
+        fileNameHaveChanged |= !([oldNewFileName isEqualToString:file.newFileName]);
+    }
+    return fileNameHaveChanged;
+}
+
+-(void)applyRenaming
+{
+    if (!_arrayOfFiles.count) return;
+    for (FRFile * file in _arrayOfFiles)
+    {
+        if (!file.selected) continue;
+        [file applyNewFileName];
+    }
+    
+    /* Purge duplicates */
+    NSUInteger i,j;
+    NSURL * urlI, * urlJ;
+    for (i=0; i < _arrayOfFiles.count - 1; i++)
+    {
+        urlI = [self fileAtIndex:i].url;
+        for (j=i+1; j < _arrayOfFiles.count; j++)
+        {
+            urlJ = [self fileAtIndex:j].url;
+            if ([urlI.absoluteURL isEqual:urlJ.absoluteURL])
+            {
+                [_arrayOfFiles removeObjectAtIndex:j];
+                j--;
+            }
+        }
     }
 }
 @end

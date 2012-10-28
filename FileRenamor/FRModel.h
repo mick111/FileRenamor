@@ -31,6 +31,8 @@
 
 @interface FRModel : NSObject
 
+@property (readonly) NSUInteger numberOfFiles;
+
 /* Return the number of elements added */
 - (NSUInteger)addFilesToArrayOfUrls:(NSArray *)urls;
 - (NSUInteger)addFilesToArrayOfUrls:(NSArray *)urls
@@ -47,11 +49,12 @@
 
 - (BOOL)removeFilesAtIndexes:(NSIndexSet*)indexes;
 
-@property (readonly) NSUInteger numberOfFiles;
-
 -(FRFile *)fileAtIndex:(NSUInteger)index;
 
 -(void)setSelection:(NSInteger)newSelection atIndex:(NSUInteger) index;
 
--(void)calculateAllNewNamesWithTokens:(NSArray *)arrayOfTokens;
+-(BOOL)calculateAllNewNamesWithTokens:(NSArray *)arrayOfTokens;
+
+/* Apply renaming */
+-(void)applyRenaming;
 @end
