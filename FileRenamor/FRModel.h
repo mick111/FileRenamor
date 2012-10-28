@@ -42,6 +42,7 @@
 
 /* Return true if okay */
 - (BOOL)moveFileFromPosition:(NSUInteger)fromPosition toPosition:(NSUInteger)toPosition;
+- (NSIndexSet *)moveFilesFromPositions:(NSIndexSet*)fromPosition toPosition:(NSUInteger)toPosition;
 
 
 @property (readonly) NSUInteger numberOfFiles;

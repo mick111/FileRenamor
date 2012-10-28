@@ -222,6 +222,25 @@
     return FALSE;
 }
 
+- (NSIndexSet *)moveFilesFromPositions:(NSIndexSet*)fromPositions
+                    toPosition:(NSUInteger)toPosition
+{
+    NSUInteger __block nbElementsAbove = 0;
+    [fromPositions enumerateIndexesUsingBlock:
+    ^(NSUInteger idx, BOOL *stop)
+    {
+        if (idx < toPosition) nbElementsAbove++;
+    }];
+    
+    NSArray * objectsToMove = [_arrayOfFiles objectsAtIndexes:fromPositions];
+    [_arrayOfFiles removeObjectsAtIndexes:fromPositions];
+    
+    NSIndexSet * newPositions = [[NSIndexSet alloc] initWithIndexesInRange:NSMakeRange(toPosition-nbElementsAbove, objectsToMove.count)];
+    [_arrayOfFiles insertObjects:objectsToMove
+                       atIndexes:newPositions];
+    return newPositions;
+}
+
 
 -(NSUInteger) numberOfFiles
 {

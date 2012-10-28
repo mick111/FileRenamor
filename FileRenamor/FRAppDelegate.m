@@ -18,6 +18,8 @@
 {
     // Insert code here to initialize your application
     self.windowController.window = self.window;
+    [self.windowController windowDidLoad];
+
 }
 
 - (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)theApplication

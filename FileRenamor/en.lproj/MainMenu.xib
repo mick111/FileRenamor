@@ -1576,7 +1576,7 @@
 												</object>
 											</object>
 											<double key="NSRowHeight">18</double>
-											<int key="NSTvFlags">-633307136</int>
+											<int key="NSTvFlags">1514176512</int>
 											<reference key="NSDelegate"/>
 											<reference key="NSDataSource"/>
 											<int key="NSColumnAutoresizingStyle">1</int>
@@ -1721,7 +1721,7 @@
 									<string key="NSFrame">{{447, -1}, {83, 17}}</string>
 									<reference key="NSSuperview" ref="448415568"/>
 									<reference key="NSWindow"/>
-									<reference key="NSNextKeyView"/>
+									<reference key="NSNextKeyView" ref="594782988"/>
 									<string key="NSReuseIdentifierKey">_NS:9</string>
 									<int key="NSTag">7</int>
 									<bool key="NSEnabled">YES</bool>

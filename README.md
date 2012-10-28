@@ -2,7 +2,6 @@ FileRenamor
 ===========
 To be done :
 - up/down buttons
-- row reorganization
 - drag and drop files/folders/recursive folder
 - add folder content
 - add folder content recursively

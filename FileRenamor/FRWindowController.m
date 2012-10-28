@@ -9,7 +9,10 @@
 #import "FRWindowController.h"
 #import "FRSpecialToken.h"
 
+
 @implementation FRWindowController
+
+#define MyPrivateTableViewDataType @"MyPrivateTableViewDataType"
 
 - (id)initWithWindow:(NSWindow *)window
 {
@@ -28,6 +31,8 @@
     
     // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
     [self.window setMinSize:NSMakeSize(863.0f, 555.0f)];
+    [self.tableView registerForDraggedTypes:
+     [NSArray arrayWithObject:MyPrivateTableViewDataType]];
     
 }
 
@@ -98,6 +103,8 @@
 
 #pragma mark -
 #pragma mark TableView Delegate/Datasource Methods
+
+
 -(id)tableView:(NSTableView *)tableView
 objectValueForTableColumn:(NSTableColumn *)tableColumn
            row:(NSInteger)row
@@ -154,6 +161,58 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
     }
     return YES;
 }
+
+#pragma mark Drag operation methods
+
+- (BOOL)tableView:(NSTableView *)tableView
+writeRowsWithIndexes:(NSIndexSet *)rowIndexes
+     toPasteboard:(NSPasteboard *)pboard
+{
+    // Copy the row numbers to the pasteboard.
+    NSData *zNSIndexSetData =
+    [NSKeyedArchiver archivedDataWithRootObject:rowIndexes];
+    [pboard declareTypes:[NSArray arrayWithObject:MyPrivateTableViewDataType]
+                   owner:self];
+    [pboard setData:zNSIndexSetData forType:MyPrivateTableViewDataType];
+    return YES;
+}
+
+- (NSDragOperation)tableView:(NSTableView *)tableView
+                validateDrop:(id<NSDraggingInfo>)info
+                 proposedRow:(NSInteger)row
+       proposedDropOperation:(NSTableViewDropOperation)dropOperation
+{
+    if (dropOperation == NSTableViewDropOn) return NO;
+    // Add code here to validate the drop
+    return NSDragOperationEvery;
+}
+
+- (BOOL)tableView:(NSTableView *)tableview
+       acceptDrop:(id<NSDraggingInfo>)info
+              row:(NSInteger)row
+    dropOperation:(NSTableViewDropOperation)dropOperation
+{
+    
+    NSPasteboard* pboard = [info draggingPasteboard];
+    NSData* rowData = [pboard dataForType:MyPrivateTableViewDataType];
+    NSIndexSet* rowIndexes =
+    [NSKeyedUnarchiver unarchiveObjectWithData:rowData];
+    
+    // Move the specified row to its new location...
+    // if we remove a row then everything moves down by one
+    // so do an insert prior to the delete
+    // --- depends which way were moving the data!!!
+    NSIndexSet * result = [model moveFilesFromPositions:rowIndexes
+                                     toPosition:row];
+    if (result.count)
+    {
+        [tableview reloadData];
+        [tableview selectRowIndexes:result byExtendingSelection:FALSE];
+        
+    }
+    return (result.count > 0);
+}
+
 
 #pragma mark
 #pragma mark TokenField Delegate Methods
