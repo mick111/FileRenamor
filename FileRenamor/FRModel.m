@@ -261,9 +261,13 @@
     return nil;
 }
 
--(void)toogleSelectionAtIndex:(NSUInteger) index
+-(void)setSelection:(NSInteger)newSelection
+            atIndex:(NSUInteger)index
 {
-    [self fileAtIndex:index].selected = ![self fileAtIndex:index].selected;
+    if (newSelection == -1)
+        [self fileAtIndex:index].selected = ![self fileAtIndex:index].selected;
+    else
+        [self fileAtIndex:index].selected = newSelection;
 }
 
 -(void)calculateAllNewNamesWithTokens:(NSArray *)arrayOfTokens
@@ -279,7 +283,8 @@
         }
         for (FRSpecialToken * token in arrayOfTokens)
         {
-            NSString * newString = [token getStringValueForFile:file atRow:currentFileNb];
+            NSString * newString = [token getStringValueForFile:file
+                                                          atRow:currentFileNb];
             file.newFileName = [file.newFileName stringByAppendingString:newString];
         }
         currentFileNb++;

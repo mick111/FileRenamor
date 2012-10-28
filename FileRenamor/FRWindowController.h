@@ -20,7 +20,7 @@
 - (IBAction)rename:(id)sender;
 - (IBAction)remove:(id)sender;
 - (IBAction)add:(id)sender;
-- (IBAction)toogleSelection:(id)sender;
+- (IBAction)changeSelection:(NSButton *)sender;
 - (IBAction)groupSelection:(id)sender;
 - (IBAction)previewRenaming:(id)sender;
 

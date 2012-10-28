@@ -228,6 +228,42 @@
                 menuItem.target = self;
                 menuItem.enabled = TRUE;
                 menuItem.state = NSOnState;
+                
+                
+                menuItem = [NSMenuItem separatorItem];
+                [self.menu addItem:menuItem];
+                
+    
+                NSNib * nib = [[NSNib alloc] initWithNibNamed:@"FRCustomViewForFileName"
+                                                       bundle:nil];
+                NSArray * arrayOfViews;
+                if (![nib instantiateNibWithOwner:self
+                                  topLevelObjects:&arrayOfViews])
+                {
+                    NSLog(@"Cannot instanciate view from FRCustomViewForFileName");
+                    return nil;
+                }
+                menuItem = [[NSMenuItem alloc] initWithTitle:@"FilenameMenu"
+                                                                   action:NULL
+                                                            keyEquivalent:@""];
+                
+                for (id object in arrayOfViews)
+                {
+                    if ([object isKindOfClass:[NSView class]])
+                    {
+                        menuItem.view = object;
+                    }
+                }
+                
+                [self.menu addItem:menuItem];
+                
+                
+                
+                
+                
+                
+                
+                
             }
                 break;
             case FRTokenTypeFileExtension:
@@ -365,10 +401,12 @@
             break;
         case FRTokenTypeFileName:
         {
-            if (self.fileNameWithExtension)
-                return file.originalFileName;
-            else
-                return file.originalFileNameBaseName;
+            NSString * fileName = (self.fileNameWithExtension) ? file.originalFileName : file.originalFileNameBaseName;
+            NSStringCompareOptions options = (self.useRegEx ? NSRegularExpressionSearch : 0) | (self.caseSensitive ? 0 : NSCaseInsensitiveSearch);
+            return [fileName stringByReplacingOccurrencesOfString:self.searchValue
+                                                       withString:self.replaceValue
+                                                          options:options
+                                                            range:NSMakeRange(0, fileName.length)];
         }
             break;
         case FRTokenTypeFileGroupName:

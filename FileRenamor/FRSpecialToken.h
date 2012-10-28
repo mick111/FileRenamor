@@ -46,6 +46,10 @@ counterNbIterationsNeededToIncrement;
 
 /* FileName Properties */
 @property (assign) BOOL fileNameWithExtension;
+@property (assign) BOOL useRegEx;
+@property (assign) BOOL caseSensitive;
+@property (weak) NSString * searchValue;
+@property (weak) NSString * replaceValue;
 
 /* Extension Properties */
 @property (assign) BOOL extensionIncludesDot;
@@ -54,5 +58,6 @@ counterNbIterationsNeededToIncrement;
 @property (strong) NSMenu * menu;
 
 
--(NSString *)getStringValueForFile:(FRFile*)file atRow:(NSUInteger)fileNumber;
+-(NSString *)getStringValueForFile:(FRFile*)file
+                             atRow:(NSUInteger)fileNumber;
 @end

@@ -48,7 +48,7 @@
 
 -(FRFile *)fileAtIndex:(NSUInteger)index;
 
--(void)toogleSelectionAtIndex:(NSUInteger) index;
+-(void)setSelection:(NSInteger)newSelection atIndex:(NSUInteger) index;
 
 -(void)calculateAllNewNamesWithTokens:(NSArray *)arrayOfTokens;
 @end

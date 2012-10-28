@@ -70,7 +70,7 @@
     return model.numberOfFiles;
 }
 
-- (IBAction)toogleSelection:(id)sender
+- (IBAction)changeSelection:(NSButton *)sender
 {
     NSIndexSet * selectedRows;
     if (self.tableView.numberOfSelectedRows)
@@ -89,7 +89,7 @@
     
     for (NSUInteger i = 0; i < selectedRows.count; i++)
     {
-        [model toogleSelectionAtIndex:indexes[i]];
+        [model setSelection:sender.tag atIndex:indexes[i]];
     }
     
     [self.tableView reloadDataForRowIndexes:selectedRows
@@ -112,7 +112,7 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
 {
     if ([tableColumn.identifier isEqualToString:@"selected"])
     {
-        [model toogleSelectionAtIndex:row];
+        [model setSelection:-1 atIndex:row];
     }
 }
 
@@ -128,7 +128,7 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
         selectedRows = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, self.tableView.numberOfRows)];
     }
     
-    NSLog(@"F : %s / %@ -> %@", __FUNCTION__, selectedRows, self.groupName.stringValue);
+    NSLog(@"F : %s / %@ -> %@", __FUNCTION__, selectedRows, ((NSTextFieldCell * )self.groupName.cell).stringValue);
     
     NSUInteger indexes[selectedRows.count];
     [selectedRows getIndexes:indexes
@@ -137,7 +137,7 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
     
     for (NSUInteger i = 0; i < selectedRows.count; i++)
     {
-        [model fileAtIndex:indexes[i]].groupName = self.groupName.stringValue;
+        [model fileAtIndex:indexes[i]].groupName = ((NSTextFieldCell * )self.groupName.cell).stringValue;
     }
     
     

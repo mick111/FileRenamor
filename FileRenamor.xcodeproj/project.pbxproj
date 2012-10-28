@@ -17,6 +17,7 @@
 		41521DD11631CB7B0094E2E1 /* FRModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 41521DD01631CB7B0094E2E1 /* FRModel.m */; };
 		41521DD41632F40E0094E2E1 /* FRSpecialToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 41521DD31632F40E0094E2E1 /* FRSpecialToken.m */; };
 		41521DD61632F9570094E2E1 /* FRCustomViewForCounter.xib in Resources */ = {isa = PBXBuildFile; fileRef = 41521DD51632F9570094E2E1 /* FRCustomViewForCounter.xib */; };
+		41EDF153163D687600CC5F89 /* FRCustomViewForFileName.xib in Resources */ = {isa = PBXBuildFile; fileRef = 41EDF152163D687500CC5F89 /* FRCustomViewForFileName.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,6 +42,7 @@
 		41521DD31632F40E0094E2E1 /* FRSpecialToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRSpecialToken.m; sourceTree = "<group>"; };
 		41521DD51632F9570094E2E1 /* FRCustomViewForCounter.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FRCustomViewForCounter.xib; sourceTree = "<group>"; };
 		41EDF151163BFDE200CC5F89 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = text; path = README.md; sourceTree = SOURCE_ROOT; };
+		41EDF152163D687500CC5F89 /* FRCustomViewForFileName.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FRCustomViewForFileName.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,6 +104,7 @@
 				41521DD01631CB7B0094E2E1 /* FRModel.m */,
 				412B2F0816306ECA00E5251C /* MainMenu.xib */,
 				41521DD51632F9570094E2E1 /* FRCustomViewForCounter.xib */,
+				41EDF152163D687500CC5F89 /* FRCustomViewForFileName.xib */,
 				41521DD21632F40E0094E2E1 /* FRSpecialToken.h */,
 				41521DD31632F40E0094E2E1 /* FRSpecialToken.m */,
 				412B2EFA16306EC900E5251C /* Supporting Files */,
@@ -178,6 +181,7 @@
 				412B2F0416306EC900E5251C /* Credits.rtf in Resources */,
 				412B2F0A16306ECA00E5251C /* MainMenu.xib in Resources */,
 				41521DD61632F9570094E2E1 /* FRCustomViewForCounter.xib in Resources */,
+				41EDF153163D687600CC5F89 /* FRCustomViewForFileName.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
