@@ -216,6 +216,8 @@
             {
                 /* Setting default Values for Token */
                 self.fileNameWithExtension = YES;
+                self.searchValue = @"";
+                self.replaceValue = @"";
                 
                 /* Setting Menu for Token */
                 self.menu = [[NSMenu alloc] initWithTitle:@"FileName Format Menu"];
@@ -233,7 +235,7 @@
                 menuItem = [NSMenuItem separatorItem];
                 [self.menu addItem:menuItem];
                 
-    
+                
                 NSNib * nib = [[NSNib alloc] initWithNibNamed:@"FRCustomViewForFileName"
                                                        bundle:nil];
                 NSArray * arrayOfViews;
@@ -244,8 +246,8 @@
                     return nil;
                 }
                 menuItem = [[NSMenuItem alloc] initWithTitle:@"FilenameMenu"
-                                                                   action:NULL
-                                                            keyEquivalent:@""];
+                                                      action:NULL
+                                               keyEquivalent:@""];
                 
                 for (id object in arrayOfViews)
                 {
@@ -255,15 +257,7 @@
                     }
                 }
                 
-                [self.menu addItem:menuItem];
-                
-                
-                
-                
-                
-                
-                
-                
+                [self.menu addItem:menuItem];                
             }
                 break;
             case FRTokenTypeFileExtension:

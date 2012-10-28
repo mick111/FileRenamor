@@ -30,7 +30,6 @@
     [super windowDidLoad];
     
     // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
-    [self.window setMinSize:NSMakeSize(863.0f, 555.0f)];
     [self.tableView registerForDraggedTypes:
      [NSArray arrayWithObject:MyPrivateTableViewDataType]];
     
@@ -42,6 +41,12 @@
 
 - (IBAction)remove:(id)sender
 {
+    if (self.tableView.numberOfSelectedRows)
+    {
+        [model removeFilesAtIndexes:self.tableView.selectedRowIndexes];
+        [self.tableView reloadData];
+        [self.tableView deselectAll:self];
+    }
 }
 
 - (IBAction)add:(id)sender
@@ -198,12 +203,8 @@ writeRowsWithIndexes:(NSIndexSet *)rowIndexes
     NSIndexSet* rowIndexes =
     [NSKeyedUnarchiver unarchiveObjectWithData:rowData];
     
-    // Move the specified row to its new location...
-    // if we remove a row then everything moves down by one
-    // so do an insert prior to the delete
-    // --- depends which way were moving the data!!!
     NSIndexSet * result = [model moveFilesFromPositions:rowIndexes
-                                     toPosition:row];
+                                             toPosition:row];
     if (result.count)
     {
         [tableview reloadData];

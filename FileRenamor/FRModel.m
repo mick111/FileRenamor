@@ -210,27 +210,21 @@
     return FALSE;
 }
 
-- (BOOL)moveFileFromPosition:(NSUInteger)fromPosition toPosition:(NSUInteger)toPosition
+- (BOOL)removeFilesAtIndexes:(NSIndexSet*)indexes
 {
-    if (fromPosition < _arrayOfFiles.count && toPosition < _arrayOfFiles.count)
-    {
-        id object = [_arrayOfFiles objectAtIndex:fromPosition];
-        [_arrayOfFiles removeObjectAtIndex:fromPosition];
-        [_arrayOfFiles insertObject:object atIndex:toPosition];
-        return TRUE;
-    }
-    return FALSE;
+    [_arrayOfFiles removeObjectsAtIndexes:indexes];
+    return TRUE;
 }
 
 - (NSIndexSet *)moveFilesFromPositions:(NSIndexSet*)fromPositions
-                    toPosition:(NSUInteger)toPosition
+                            toPosition:(NSUInteger)toPosition
 {
     NSUInteger __block nbElementsAbove = 0;
     [fromPositions enumerateIndexesUsingBlock:
-    ^(NSUInteger idx, BOOL *stop)
-    {
-        if (idx < toPosition) nbElementsAbove++;
-    }];
+     ^(NSUInteger idx, BOOL *stop)
+     {
+         if (idx < toPosition) nbElementsAbove++;
+     }];
     
     NSArray * objectsToMove = [_arrayOfFiles objectsAtIndexes:fromPositions];
     [_arrayOfFiles removeObjectsAtIndexes:fromPositions];

@@ -41,9 +41,9 @@
 - (NSURL *)getFileAtIndex:(NSUInteger)index;
 
 /* Return true if okay */
-- (BOOL)moveFileFromPosition:(NSUInteger)fromPosition toPosition:(NSUInteger)toPosition;
 - (NSIndexSet *)moveFilesFromPositions:(NSIndexSet*)fromPosition toPosition:(NSUInteger)toPosition;
 
+- (BOOL)removeFilesAtIndexes:(NSIndexSet*)indexes;
 
 @property (readonly) NSUInteger numberOfFiles;
 

@@ -7,7 +7,7 @@ To be done :
 - add folder content recursively
 - effective renaming
 - instantaneous name calculation (when token field is modified, when table view is modified)
-- delete elements from tableView
+- delete elements from tableView with backspace
 - validate regexp / replace & tokenField user entries (forbiden caracter)
 
 Known bugs
