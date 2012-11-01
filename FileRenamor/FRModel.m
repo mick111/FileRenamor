@@ -58,7 +58,7 @@
 -(void)applyNewFileName
 {
     NSError * error = nil;
-    NSURL * newURL = [NSURL URLWithString:self.newFileName
+    NSURL * newURL = [NSURL URLWithString:[self.newFileName stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]
                             relativeToURL:self.url.URLByDeletingLastPathComponent];
     [[NSFileManager defaultManager] moveItemAtURL:self.url
                                             toURL:newURL
