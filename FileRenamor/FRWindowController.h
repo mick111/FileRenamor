@@ -17,6 +17,8 @@
 
 @property (weak) IBOutlet NSTableView *tableView;
 
+@property (assign) NSUInteger addFileOption;
+
 - (IBAction)rename:(id)sender;
 - (IBAction)remove:(id)sender;
 - (IBAction)add:(id)sender;
@@ -30,4 +32,5 @@
 - (IBAction)addTokenField:(NSButton *)sender;
 
 @property BOOL autoPreview;
+@property BOOL removeTreatedItems;
 @end

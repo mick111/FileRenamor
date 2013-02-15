@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4121C334166D4F9A00883DFE /* FROpenAdditionalOption.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4121C333166D4F9A00883DFE /* FROpenAdditionalOption.xib */; };
 		412B2EF416306EC900E5251C /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 412B2EF316306EC900E5251C /* Cocoa.framework */; };
 		412B2EFE16306EC900E5251C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 412B2EFC16306EC900E5251C /* InfoPlist.strings */; };
 		412B2F0016306EC900E5251C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 412B2EFF16306EC900E5251C /* main.m */; };
@@ -21,6 +22,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4121C333166D4F9A00883DFE /* FROpenAdditionalOption.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FROpenAdditionalOption.xib; sourceTree = "<group>"; };
 		412B2EEF16306EC900E5251C /* FileRenamor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FileRenamor.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		412B2EF316306EC900E5251C /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		412B2EF616306EC900E5251C /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -105,6 +107,7 @@
 				41521DCF1631CB7B0094E2E1 /* FRModel.h */,
 				41521DD01631CB7B0094E2E1 /* FRModel.m */,
 				412B2F0816306ECA00E5251C /* MainMenu.xib */,
+				4121C333166D4F9A00883DFE /* FROpenAdditionalOption.xib */,
 				41521DD51632F9570094E2E1 /* FRCustomViewForCounter.xib */,
 				41EDF152163D687500CC5F89 /* FRCustomViewForFileName.xib */,
 				41521DD21632F40E0094E2E1 /* FRSpecialToken.h */,
@@ -193,6 +196,7 @@
 				412B2F0A16306ECA00E5251C /* MainMenu.xib in Resources */,
 				41521DD61632F9570094E2E1 /* FRCustomViewForCounter.xib in Resources */,
 				41EDF153163D687600CC5F89 /* FRCustomViewForFileName.xib in Resources */,
+				4121C334166D4F9A00883DFE /* FROpenAdditionalOption.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -8,11 +8,15 @@
 
 #import "FRWindowController.h"
 #import "FRSpecialToken.h"
-
+#import "FRAppDelegate.h"
 
 @implementation FRWindowController
 
 #define FRPrivateTableViewDataType @"MyPrivateTableViewDataType"
+
+#define ADD_FOLDERS_AS_ELEMENTS 0
+#define ADD_FOLDERS_CONTENT     1
+#define ADD_FOLDERS_RECURSIVELY 2
 
 - (id)initWithWindow:(NSWindow *)window
 {
@@ -32,9 +36,12 @@
     // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
     [self.tableView registerForDraggedTypes:
      [NSArray arrayWithObjects:FRPrivateTableViewDataType, NSFilenamesPboardType, nil]];
+
+    self.addFileOption = 0;
     
 }
 
+@synthesize removeTreatedItems;
 - (IBAction)rename:(id)sender
 {
     if ([model calculateAllNewNamesWithTokens:_fileNameFormatTokenField.objectValue])
@@ -55,7 +62,7 @@
                       otherButton:nil
         informativeTextWithFormat:@"Warning: If two files have the same final name, the second will not be renamed."] runModal])
         return;
-    [model applyRenaming];
+    [model applyRenaming:self.removeTreatedItems];
     [self.tableView reloadData];
 }
 
@@ -81,16 +88,31 @@
     [panel setCanChooseFiles:YES];
     [panel setAllowsMultipleSelection:YES];
     [panel setMessage:@"Select files or directories"];
+    [panel setAccessoryView:[FRAppDelegate loadMainViewFromNib:@"FROpenAdditionalOption"
+                                                     withOwner:self]];
     
     // Display the panel attached to the document's window.
     [panel beginSheetModalForWindow:window completionHandler:^(NSInteger result){
         if (result == NSFileHandlingPanelOKButton)
         {
             // Add all selected files in URL
-            [model addFilesToArrayOfUrls:[panel URLs]];
+            switch (self.addFileOption) {
+                case ADD_FOLDERS_AS_ELEMENTS:
+                    [model addFilesToArrayOfUrls:[panel URLs]];
+                    break;
+                case ADD_FOLDERS_CONTENT:
+                    [model addFilesAndFoldersContentToArrayOfUrls:[panel URLs]];
+                    break;
+                case ADD_FOLDERS_RECURSIVELY:
+                    [model addFilesAndFoldersContentRecursivelyToArrayOfUrls:[panel URLs]];
+                    break;
+                default:
+                    break;
+            }
             [self.tableView reloadData];
         }
         
+        NSLog(@"Selected option : %ld", self.addFileOption);
     }];
 }
 
@@ -128,7 +150,13 @@
 
 #pragma mark -
 #pragma mark TableView Delegate/Datasource Methods
-
+-(BOOL)tableView:(NSTableView *)tableView
+shouldEditTableColumn:(NSTableColumn *)tableColumn
+             row:(NSInteger)row
+{
+    NSLog(@"%s : Column %@ row %ld is editable ? %@", __FUNCTION__, tableColumn.identifier, row, tableColumn.isEditable ? @"YES" : @"NO");
+    return tableColumn.isEditable;
+}
 
 -(id)tableView:(NSTableView *)tableView
 objectValueForTableColumn:(NSTableColumn *)tableColumn
@@ -177,7 +205,7 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
                               columnIndexes:[NSIndexSet indexSetWithIndex:[self.tableView columnWithIdentifier:@"groupName"]]];
 }
 
--(BOOL) selectionShouldChangeInTableView:(NSTableView *)tableView
+-(BOOL)selectionShouldChangeInTableView:(NSTableView *)tableView
 {
     NSLog(@"%s : clickedColumn %ld", __FUNCTION__, [tableView clickedColumn]);
     if ([tableView clickedColumn] == [self.tableView columnWithIdentifier:@"selected"])
@@ -186,6 +214,13 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
     }
     return YES;
 }
+
+- (void)tableView:(NSTableView *)tableView sortDescriptorsDidChange:(NSArray *)oldDescriptors
+{
+    [model sortUsingDescriptors: [tableView sortDescriptors]];
+    [tableView reloadData];
+}
+
 
 #pragma mark Drag operation methods
 
@@ -277,13 +312,15 @@ writeRowsWithIndexes:(NSIndexSet *)rowIndexes
     return tokenString;
 }
 
-- (NSMenu *)tokenField:(NSTokenField *)tokenField menuForRepresentedObject:(id)representedObject
+- (NSMenu *)tokenField:(NSTokenField *)tokenField
+menuForRepresentedObject:(id)representedObject
 {
     FRSpecialToken * token = (FRSpecialToken *) representedObject;
     NSLog(@"F : %s / %@", __FUNCTION__, token.menu.title);
     return token.menu;
 }
-- (BOOL)tokenField:(NSTokenField *)tokenField hasMenuForRepresentedObject:(id)representedObject
+- (BOOL)tokenField:(NSTokenField *)tokenField
+hasMenuForRepresentedObject:(id)representedObject
 {
     FRSpecialToken * token = (FRSpecialToken *) representedObject;
     NSLog(@"F : %s : %@", __FUNCTION__, token.string);
@@ -315,8 +352,12 @@ styleForRepresentedObject:(id)representedObject
     FRSpecialToken * token = [[FRSpecialToken alloc] initWithString:[@"\x1B" stringByAppendingString:sender.title]];
     _fileNameFormatTokenField.objectValue = [_fileNameFormatTokenField.objectValue arrayByAddingObject:token];
     
+    if (self.autoPreview)
+        [self previewRenaming:nil];
+    
 }
 
+@synthesize autoPreview;
 - (IBAction)previewRenaming:(id)sender
 {
     [model calculateAllNewNamesWithTokens:_fileNameFormatTokenField.objectValue];

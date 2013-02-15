@@ -7,7 +7,7 @@
 //
 
 #import "FRSpecialToken.h"
-
+#import "FRAppDelegate.h"
 
 
 @implementation FRSpecialToken
@@ -95,29 +95,16 @@
                 
                 /* Setting Menu for Token */
                 self.menu = [[NSMenu alloc] initWithTitle:@"Counter"];
-                NSNib * nib = [[NSNib alloc] initWithNibNamed:@"FRCustomViewForCounter"
-                                                       bundle:nil];
-                NSArray * arrayOfViews;
-                if (![nib instantiateNibWithOwner:self
-                                  topLevelObjects:&arrayOfViews])
-                {
-                    NSLog(@"Cannot instanciate view from FRCustomViewForCounter");
-                    return nil;
-                }
-                NSLog(@"Nib loaded");
+                
+                
                 NSMenuItem * menuItem = [[NSMenuItem alloc] initWithTitle:@"CounterMenu"
                                                                    action:@selector(setCounterProperties)
                                                             keyEquivalent:@""];
                 
-                for (id object in arrayOfViews)
-                {
-                    if ([object isKindOfClass:[NSView class]])
-                    {
-                        menuItem.view = object;
-                    }
-                }
+                menuItem.view = [FRAppDelegate loadMainViewFromNib:@"FRCustomViewForCounter"
+                                                         withOwner:self];
                 
-                [self.menu addItem:menuItem];
+                if (menuItem.view) [self.menu addItem:menuItem];
             }
                 break;
             case FRTokenTypeMinute:
@@ -235,29 +222,13 @@
                 menuItem = [NSMenuItem separatorItem];
                 [self.menu addItem:menuItem];
                 
-                
-                NSNib * nib = [[NSNib alloc] initWithNibNamed:@"FRCustomViewForFileName"
-                                                       bundle:nil];
-                NSArray * arrayOfViews;
-                if (![nib instantiateNibWithOwner:self
-                                  topLevelObjects:&arrayOfViews])
-                {
-                    NSLog(@"Cannot instanciate view from FRCustomViewForFileName");
-                    return nil;
-                }
                 menuItem = [[NSMenuItem alloc] initWithTitle:@"FilenameMenu"
                                                       action:NULL
                                                keyEquivalent:@""];
+                menuItem.view = [FRAppDelegate loadMainViewFromNib:@"FRCustomViewForFileName"
+                                                         withOwner:self];
                 
-                for (id object in arrayOfViews)
-                {
-                    if ([object isKindOfClass:[NSView class]])
-                    {
-                        menuItem.view = object;
-                    }
-                }
-                
-                [self.menu addItem:menuItem];                
+                if (menuItem.view) [self.menu addItem:menuItem];
             }
                 break;
             case FRTokenTypeFileExtension:
@@ -387,7 +358,7 @@
             break;
         case FRTokenTypeFileExtension:
         {
-            if (self.extensionIncludesDot)
+            if (self.extensionIncludesDot && !([file.originalFileNameExtension isEqualToString:@""]))
                 return [@"." stringByAppendingString:file.originalFileNameExtension];
             else
                 return file.originalFileNameExtension;

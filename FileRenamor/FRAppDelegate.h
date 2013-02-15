@@ -12,5 +12,6 @@
 @interface FRAppDelegate : NSObject <NSApplicationDelegate>
 @property (assign) IBOutlet NSWindow *window;
 @property (unsafe_unretained) IBOutlet FRWindowController *windowController;
-
++ (NSView *)loadMainViewFromNib:(NSString *)nibName
+                      withOwner:(id)owner;
 @end

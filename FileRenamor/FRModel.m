@@ -13,6 +13,7 @@
 @synthesize selected = _selected;
 @synthesize groupName = _groupName;
 @synthesize originalFileName = _originalFileName;
+@synthesize fullPath = _fullPath;
 @synthesize newFileName = _newFileName;
 @synthesize icon = _icon;
 @synthesize url;
@@ -53,6 +54,12 @@
                          error:&error];
     _originalFileName = fileName;
     return _originalFileName;
+}
+
+-(NSString *)fullPath
+{
+    _fullPath = [self.url absoluteString];
+    return _fullPath;
 }
 
 -(void)applyNewFileName
@@ -143,11 +150,99 @@
     return self;
 }
 
-/* Return true if all files are added */
+/* Return number of files added are added */
+- (NSUInteger)addFilesToArrayOfUrls:(NSArray *)urls
+                        withOptions:(NSDirectoryEnumerationOptions) options
+{
+    
+    NSMutableArray * files = [[NSMutableArray alloc] initWithCapacity:urls.count];
+    
+    NSFileManager* fileManager = [NSFileManager defaultManager];
+    
+    /* NSDirectoryEnumerationSkipsSubdirectoryDescendants
+     NSDirectoryEnumerationSkipsPackageDescendants
+     NSDirectoryEnumerationSkipsHiddenFiles */
+    
+    for (NSURL * url in urls)
+    {
+        BOOL isDirectory;
+        BOOL fileExists;
+        
+        fileExists = [fileManager fileExistsAtPath:url.path isDirectory:&isDirectory];
+        
+        if (!fileExists)
+        {
+            NSLog(@"URL %@ does not exist", url);
+            continue;
+        }
+        
+        if (isDirectory)
+        {
+            NSDirectoryEnumerator * directoryEnumerator =
+            [fileManager enumeratorAtURL:url
+              includingPropertiesForKeys:nil
+                                 options:options
+                            errorHandler:^BOOL(NSURL * url, NSError *error)
+             {
+                 NSLog(@"  -- URL %@", url.path);
+                 NSLog(@"  -- ERROR %@", error);
+                 return YES;
+             }];
+            for (NSURL * urla in directoryEnumerator)
+            {
+                BOOL isDirectory;
+                BOOL fileExists;
+                fileExists = [fileManager fileExistsAtPath:urla.path isDirectory:&isDirectory];
+                
+                if (!fileExists)
+                {
+                    NSLog(@"URL %@ does not exist", urla);
+                    continue;
+                }
+                if (!isDirectory)
+                {
+                    [files addObject:urla];
+                }
+            }
+        }
+        else
+        {
+            [files addObject:url];
+        }
+    }
+    
+    NSUInteger sum = 0;
+    sum += [self addFilesToArrayOfUrls:files
+                               atIndex:_arrayOfFiles.count];
+    return sum;
+}
+
+
 - (NSUInteger)addFilesToArrayOfUrls:(NSArray *)urls
 {
-    return [self addFilesToArrayOfUrls:urls atIndex:_arrayOfFiles.count];
+    return [self addFilesToArrayOfUrls:urls
+                               atIndex:_arrayOfFiles.count];
 }
+/* Return number of files added are added */
+- (NSUInteger)addFilesOnlyToArrayOfUrls:(NSArray *)urls
+{
+    NSMutableArray * files = [[NSMutableArray alloc] initWithCapacity:urls.count];
+    return [self addFilesToArrayOfUrls:files
+                               atIndex:_arrayOfFiles.count];
+}
+/* Return number of files added are added */
+- (NSUInteger)addFilesAndFoldersContentToArrayOfUrls:(NSArray *)urls
+{
+    return [self addFilesToArrayOfUrls:urls
+                           withOptions:NSDirectoryEnumerationSkipsPackageDescendants | NSDirectoryEnumerationSkipsSubdirectoryDescendants | NSDirectoryEnumerationSkipsHiddenFiles];
+}
+/* Return number of files added are added */
+- (NSUInteger)addFilesAndFoldersContentRecursivelyToArrayOfUrls:(NSArray *)urls
+{
+    return [self addFilesToArrayOfUrls:urls
+                           withOptions:NSDirectoryEnumerationSkipsPackageDescendants | NSDirectoryEnumerationSkipsHiddenFiles];
+}
+
 - (NSUInteger)addFilesToArrayOfUrls:(NSArray *)urls
                             atIndex:(NSUInteger)index
 {
@@ -170,7 +265,8 @@
 }
 
 /* Return true if okay */
-- (BOOL)addFileToArrayOfUrls:(NSURL *)url atIndex:(NSUInteger)index
+- (BOOL)addFileToArrayOfUrls:(NSURL *)url
+                     atIndex:(NSUInteger)index
 {
     for (FRFile * existingUrl in _arrayOfFiles) {
         if ([url.absoluteURL isEqual:existingUrl.url.absoluteURL])
@@ -183,7 +279,8 @@
     if (index <= _arrayOfFiles.count)
     {
         FRFile * file = [FRFile fileWithURL:url];
-        [_arrayOfFiles insertObject:file atIndex:index];
+        [_arrayOfFiles insertObject:file
+                            atIndex:index];
         return TRUE;
     }
     return FALSE;
@@ -306,7 +403,7 @@
     return fileNameHaveChanged;
 }
 
--(void)applyRenaming
+-(void)applyRenaming:(BOOL)removeWhenFinished
 {
     if (!_arrayOfFiles.count) return;
     for (FRFile * file in _arrayOfFiles)
@@ -331,5 +428,24 @@
             }
         }
     }
+    
+    /* Purge treated items */
+    if (removeWhenFinished) {
+        NSMutableArray * filesToRemove = [[NSMutableArray alloc] init];
+        for (FRFile * file in _arrayOfFiles)
+        {
+            if (!file.selected) continue;
+            [filesToRemove addObject:file];
+        }
+        [_arrayOfFiles removeObjectsInArray:filesToRemove];
+        [filesToRemove removeAllObjects];
+        filesToRemove = nil;
+    }
+    
+}
+
+-(void)sortUsingDescriptors:(NSArray *)sortDescriptors
+{
+    [_arrayOfFiles sortUsingDescriptors:sortDescriptors];
 }
 @end

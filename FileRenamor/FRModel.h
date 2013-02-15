@@ -16,6 +16,7 @@
 @property (readonly, strong) NSString * originalFileName;
 @property (strong) NSString * newFileName;
 @property (strong) NSString * groupName;
+@property (readonly,strong) NSString * fullPath;
 
 @property (strong) NSURL * url;
 
@@ -35,6 +36,8 @@
 
 /* Return the number of elements added */
 - (NSUInteger)addFilesToArrayOfUrls:(NSArray *)urls;
+- (NSUInteger)addFilesAndFoldersContentToArrayOfUrls:(NSArray *)urls;
+- (NSUInteger)addFilesAndFoldersContentRecursivelyToArrayOfUrls:(NSArray *)urls;
 - (NSUInteger)addFilesToArrayOfUrls:(NSArray *)urls
                             atIndex:(NSUInteger)index;
 
@@ -49,6 +52,9 @@
 
 - (BOOL)removeFilesAtIndexes:(NSIndexSet*)indexes;
 
+/* File sorting */
+-(void)sortUsingDescriptors:(NSArray *)sortDescriptors;
+
 -(FRFile *)fileAtIndex:(NSUInteger)index;
 
 -(void)setSelection:(NSInteger)newSelection atIndex:(NSUInteger) index;
@@ -56,5 +62,5 @@
 -(BOOL)calculateAllNewNamesWithTokens:(NSArray *)arrayOfTokens;
 
 /* Apply renaming */
--(void)applyRenaming;
+-(void)applyRenaming:(BOOL)removeWhenFinished;
 @end
