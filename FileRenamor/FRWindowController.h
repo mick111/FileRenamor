@@ -8,14 +8,16 @@
 
 #import <Cocoa/Cocoa.h>
 #import "FRModel.h"
+#import "FRTableView.h"
 
+@class FRTableView;
 
 @interface FRWindowController : NSWindowController <NSTableViewDataSource, NSTableViewDelegate, NSTokenFieldDelegate>
 {
     FRModel * model;
 }
 
-@property (weak) IBOutlet NSTableView *tableView;
+@property (weak) IBOutlet FRTableView *tableView;
 
 @property (assign) NSUInteger addFileOption;
 

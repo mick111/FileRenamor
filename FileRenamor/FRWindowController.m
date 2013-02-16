@@ -36,7 +36,9 @@
     // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
     [self.tableView registerForDraggedTypes:
      [NSArray arrayWithObjects:FRPrivateTableViewDataType, NSFilenamesPboardType, nil]];
-
+    
+    self.tableView.owner = self;
+    
     self.addFileOption = 0;
     
 }

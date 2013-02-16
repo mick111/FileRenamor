@@ -18,6 +18,7 @@
 		41521DD11631CB7B0094E2E1 /* FRModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 41521DD01631CB7B0094E2E1 /* FRModel.m */; };
 		41521DD41632F40E0094E2E1 /* FRSpecialToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 41521DD31632F40E0094E2E1 /* FRSpecialToken.m */; };
 		41521DD61632F9570094E2E1 /* FRCustomViewForCounter.xib in Resources */ = {isa = PBXBuildFile; fileRef = 41521DD51632F9570094E2E1 /* FRCustomViewForCounter.xib */; };
+		41AF0CC616CFADE600D5124F /* FRTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 41AF0CC516CFADE600D5124F /* FRTableView.m */; };
 		41EDF153163D687600CC5F89 /* FRCustomViewForFileName.xib in Resources */ = {isa = PBXBuildFile; fileRef = 41EDF152163D687500CC5F89 /* FRCustomViewForFileName.xib */; };
 /* End PBXBuildFile section */
 
@@ -43,6 +44,8 @@
 		41521DD21632F40E0094E2E1 /* FRSpecialToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRSpecialToken.h; sourceTree = "<group>"; };
 		41521DD31632F40E0094E2E1 /* FRSpecialToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRSpecialToken.m; sourceTree = "<group>"; };
 		41521DD51632F9570094E2E1 /* FRCustomViewForCounter.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FRCustomViewForCounter.xib; sourceTree = "<group>"; };
+		41AF0CC416CFADE600D5124F /* FRTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRTableView.h; sourceTree = "<group>"; };
+		41AF0CC516CFADE600D5124F /* FRTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRTableView.m; sourceTree = "<group>"; };
 		41EDF151163BFDE200CC5F89 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = text; path = README.md; sourceTree = SOURCE_ROOT; };
 		41EDF152163D687500CC5F89 /* FRCustomViewForFileName.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FRCustomViewForFileName.xib; sourceTree = "<group>"; };
 		41EDF155163D76E400CC5F89 /* FileRenamor.app */ = {isa = PBXFileReference; lastKnownFileType = wrapper.application; path = FileRenamor.app; sourceTree = "<group>"; };
@@ -104,6 +107,8 @@
 				412B2F0616306EC900E5251C /* FRAppDelegate.m */,
 				41521DCC1631CA5E0094E2E1 /* FRWindowController.h */,
 				41521DCD1631CA5E0094E2E1 /* FRWindowController.m */,
+				41AF0CC416CFADE600D5124F /* FRTableView.h */,
+				41AF0CC516CFADE600D5124F /* FRTableView.m */,
 				41521DCF1631CB7B0094E2E1 /* FRModel.h */,
 				41521DD01631CB7B0094E2E1 /* FRModel.m */,
 				412B2F0816306ECA00E5251C /* MainMenu.xib */,
@@ -212,6 +217,7 @@
 				41521DCE1631CA5E0094E2E1 /* FRWindowController.m in Sources */,
 				41521DD11631CB7B0094E2E1 /* FRModel.m in Sources */,
 				41521DD41632F40E0094E2E1 /* FRSpecialToken.m in Sources */,
+				41AF0CC616CFADE600D5124F /* FRTableView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
