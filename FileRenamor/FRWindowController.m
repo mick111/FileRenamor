@@ -170,10 +170,8 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
   forTableColumn:(NSTableColumn *)tableColumn
              row:(NSInteger)row
 {
-    if ([tableColumn.identifier isEqualToString:@"selected"])
-    {
-        [model setSelection:-1 atIndex:row];
-    }
+    [[model fileAtIndex:row] setValue:object
+                               forKey:tableColumn.identifier];
 }
 
 - (IBAction)groupSelection:(id)sender
@@ -365,5 +363,7 @@ styleForRepresentedObject:(id)representedObject
                               columnIndexes:[NSIndexSet indexSetWithIndex:[self.tableView columnWithIdentifier:@"newFileName"]]];
     
 }
+
+
 
 @end
