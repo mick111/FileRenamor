@@ -137,14 +137,14 @@
     {
         // Initialize self.
         _arrayOfFiles = [[NSMutableArray alloc] init];
-    }
-    
-    // See if instance variable have been created.
-    if (!_arrayOfFiles)
-    {
-        // Freeing all instance variables.
-        _arrayOfFiles = nil;
-        return nil;
+        
+        // See if instance variable have been created.
+        if (!_arrayOfFiles)
+        {
+            // Freeing all instance variables.
+            _arrayOfFiles = nil;
+            return nil;
+        }
     }
     
     return self;
