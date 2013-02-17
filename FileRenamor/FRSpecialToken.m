@@ -11,6 +11,20 @@
 
 
 @implementation FRSpecialToken
+{
+    NSUInteger _counterStart;
+    NSUInteger _counterStep;
+    NSUInteger _counterNbDigits;
+    NSUInteger _counterNbIterationsNeededToIncrement;
+    
+    BOOL _extensionIncludesDot;
+    
+    BOOL _fileNameWithExtension;
+    BOOL _useRegEx;
+    BOOL _caseSensitive;
+    NSString * _searchValue;
+    NSString * _replaceValue;
+}
 
 @synthesize tokenType = _tokenType;
 
@@ -265,6 +279,8 @@
     
     /* Update Menu */
     sender.state = (self.extensionIncludesDot) ? NSOnState : NSOffState;
+    
+    if (_owner.autoPreview) [_owner previewRenaming:self];
 }
 
 -(void)toogleFileNameWithExtension:(NSMenuItem *)sender
@@ -274,6 +290,8 @@
     
     /* Update Menu */
     sender.state = (self.fileNameWithExtension) ? NSOnState : NSOffState;
+    
+    if (_owner.autoPreview) [_owner previewRenaming:self];
 }
 
 -(void)setFormatDate:(NSMenuItem *)sender
@@ -294,6 +312,7 @@
             sibling.state = NSOnState;
         }
     }
+    if (_owner.autoPreview) [_owner previewRenaming:self];
 }
 
 -(void)setSourceDate:(NSMenuItem *)sender
@@ -321,7 +340,94 @@
             sibling.state = NSOnState;
         }
     }
+    if (_owner.autoPreview) [_owner previewRenaming:self];
 }
+
+-(BOOL)extensionIncludesDot
+{
+    return _extensionIncludesDot;
+}
+-(void)setExtensionIncludesDot:(BOOL)extensionIncludesDot
+{
+    _extensionIncludesDot = extensionIncludesDot;
+    if (_owner.autoPreview) [_owner previewRenaming:self];
+}
+
+-(BOOL)useRegEx
+{
+    return _useRegEx;
+}
+-(void)setUseRegEx:(BOOL)useRegEx
+{
+    _useRegEx = useRegEx;
+    if (_owner.autoPreview) [_owner previewRenaming:self];
+}
+-(BOOL)caseSensitive
+{
+    return _caseSensitive;
+}
+-(void)setCaseSensitive:(BOOL)caseSensitive
+{
+    _caseSensitive = caseSensitive;
+    if (_owner.autoPreview) [_owner previewRenaming:self];
+}
+
+-(NSString *)searchValue
+{
+    return _searchValue;
+}
+-(void)setSearchValue:(NSString *)searchValue
+{
+    _searchValue = searchValue;
+    if (_owner.autoPreview) [_owner previewRenaming:self];
+}
+-(NSString *)replaceValue
+{
+    return _replaceValue;
+}
+-(void)setReplaceValue:(NSString *)replaceValue
+{
+    _replaceValue = replaceValue;
+    if (_owner.autoPreview) [_owner previewRenaming:self];
+}
+
+-(NSUInteger)counterStart
+{
+    return _counterStart;
+}
+-(void)setCounterStart:(NSUInteger)counterStart
+{
+    _counterStart = counterStart;
+    if (_owner.autoPreview) [_owner previewRenaming:self];
+}
+-(NSUInteger)counterStep
+{
+    return _counterStep;
+}
+-(void)setCounterStep:(NSUInteger)counterStep
+{
+    _counterStep = counterStep;
+    if (_owner.autoPreview) [_owner previewRenaming:self];
+}
+-(NSUInteger)counterNbIterationsNeededToIncrement
+{
+    return _counterNbIterationsNeededToIncrement;
+}
+-(void)setCounterNbIterationsNeededToIncrement:(NSUInteger)counterNbIterationsNeededToIncrement
+{
+    _counterNbIterationsNeededToIncrement = counterNbIterationsNeededToIncrement;
+    if (_owner.autoPreview) [_owner previewRenaming:self];
+}
+-(NSUInteger)counterNbDigits
+{
+    return _counterNbDigits;
+}
+-(void)setCounterNbDigits:(NSUInteger)counterNbDigits
+{
+    _counterNbDigits = counterNbDigits;
+    if (_owner.autoPreview) [_owner previewRenaming:self];
+}
+
 -(NSString *) description
 {
     switch (self.tokenType)

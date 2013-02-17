@@ -8,14 +8,16 @@
 
 #import <Foundation/Foundation.h>
 #import "FRModel.h"
+#import "FRWindowController.h"
 
 @class FRFile;
+@class FRWindowController;
 
 #define FRSOURCEDATE_NOW          0
 #define FRSOURCEDATE_MODIFICATION 2
 #define FRSOURCEDATE_CREATION     1
 
-@interface FRSpecialToken : NSViewController
+@interface FRSpecialToken : NSObject
 typedef enum FRTokenType_t {
     FRTokenTypeUser = 0,
     FRTokenTypeCounter = 1,
@@ -37,8 +39,7 @@ typedef enum FRTokenType_t {
 @property (assign) NSUInteger counterStart;
 @property (assign) NSUInteger counterStep;
 @property (assign) NSUInteger counterNbDigits;
-@property (assign) NSUInteger
-counterNbIterationsNeededToIncrement;
+@property (assign) NSUInteger counterNbIterationsNeededToIncrement;
 
 /* DateFormat Properties */
 @property (strong) NSString * dateFormat;
@@ -57,6 +58,9 @@ counterNbIterationsNeededToIncrement;
 @property (assign, readonly) FRTokenType tokenType;
 @property (strong) NSMenu * menu;
 
+
+/* Window controller */
+@property (assign) FRWindowController* owner;
 
 -(NSString *)getStringValueForFile:(FRFile*)file
                              atRow:(NSUInteger)fileNumber;

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4121C334166D4F9A00883DFE /* FROpenAdditionalOption.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4121C333166D4F9A00883DFE /* FROpenAdditionalOption.xib */; };
+		41229A4C16D18AED00807167 /* FRTokenField.m in Sources */ = {isa = PBXBuildFile; fileRef = 41229A4B16D18AED00807167 /* FRTokenField.m */; };
 		412B2EF416306EC900E5251C /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 412B2EF316306EC900E5251C /* Cocoa.framework */; };
 		412B2EFE16306EC900E5251C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 412B2EFC16306EC900E5251C /* InfoPlist.strings */; };
 		412B2F0016306EC900E5251C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 412B2EFF16306EC900E5251C /* main.m */; };
@@ -24,6 +25,8 @@
 
 /* Begin PBXFileReference section */
 		4121C333166D4F9A00883DFE /* FROpenAdditionalOption.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FROpenAdditionalOption.xib; sourceTree = "<group>"; };
+		41229A4A16D18AED00807167 /* FRTokenField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRTokenField.h; sourceTree = "<group>"; };
+		41229A4B16D18AED00807167 /* FRTokenField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRTokenField.m; sourceTree = "<group>"; };
 		412B2EEF16306EC900E5251C /* FileRenamor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FileRenamor.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		412B2EF316306EC900E5251C /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		412B2EF616306EC900E5251C /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -107,6 +110,8 @@
 				412B2F0616306EC900E5251C /* FRAppDelegate.m */,
 				41521DCC1631CA5E0094E2E1 /* FRWindowController.h */,
 				41521DCD1631CA5E0094E2E1 /* FRWindowController.m */,
+				41229A4A16D18AED00807167 /* FRTokenField.h */,
+				41229A4B16D18AED00807167 /* FRTokenField.m */,
 				41AF0CC416CFADE600D5124F /* FRTableView.h */,
 				41AF0CC516CFADE600D5124F /* FRTableView.m */,
 				41521DCF1631CB7B0094E2E1 /* FRModel.h */,
@@ -218,6 +223,7 @@
 				41521DD11631CB7B0094E2E1 /* FRModel.m in Sources */,
 				41521DD41632F40E0094E2E1 /* FRSpecialToken.m in Sources */,
 				41AF0CC616CFADE600D5124F /* FRTableView.m in Sources */,
+				41229A4C16D18AED00807167 /* FRTokenField.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

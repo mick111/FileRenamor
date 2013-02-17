@@ -38,8 +38,12 @@
      [NSArray arrayWithObjects:FRPrivateTableViewDataType, NSFilenamesPboardType, nil]];
     
     self.tableView.owner = self;
+    self.fileNameFormatTokenField.owner = self;
+    
+    [self.fileNameFormatTokenField setTokenizingCharacterSet:[NSCharacterSet characterSetWithCharactersInString:@""]];
     
     self.addFileOption = 0;
+    self.autoPreview = 1;
     
 }
 
@@ -76,11 +80,12 @@
         [self.tableView reloadData];
         [self.tableView deselectAll:self];
     }
+    if (autoPreview) [self previewRenaming:self];
 }
 
 - (IBAction)add:(id)sender
 {
-    NSLog(@"Number of rows %lu", model.numberOfFiles);
+    FRLog(@"Number of rows %lu", model.numberOfFiles);
     // Get the window.
     NSWindow* window = [self window];
     
@@ -112,15 +117,17 @@
                     break;
             }
             [self.tableView reloadData];
+            if (autoPreview) [self previewRenaming:self]; 
         }
         
-        NSLog(@"Selected option : %ld", self.addFileOption);
+        FRLog(@"Selected option : %ld", self.addFileOption);
     }];
+    
 }
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView
 {
-    NSLog(@"Number of rows %lu", model.numberOfFiles);
+    FRLog(@"Number of rows %lu", model.numberOfFiles);
     return model.numberOfFiles;
 }
 
@@ -148,6 +155,7 @@
     
     [self.tableView reloadDataForRowIndexes:selectedRows
                               columnIndexes:[NSIndexSet indexSetWithIndex:[self.tableView columnWithIdentifier:@"selected"]]];
+    if (autoPreview) [self previewRenaming:self];
 }
 
 #pragma mark -
@@ -156,7 +164,7 @@
 shouldEditTableColumn:(NSTableColumn *)tableColumn
              row:(NSInteger)row
 {
-    NSLog(@"%s : Column %@ row %ld is editable ? %@", __FUNCTION__, tableColumn.identifier, row, tableColumn.isEditable ? @"YES" : @"NO");
+    FRLog(@"%s : Column %@ row %ld is editable ? %@", __FUNCTION__, tableColumn.identifier, row, tableColumn.isEditable ? @"YES" : @"NO");
     return tableColumn.isEditable;
 }
 
@@ -174,6 +182,8 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
 {
     [[model fileAtIndex:row] setValue:object
                                forKey:tableColumn.identifier];
+    
+    if (autoPreview) [self previewRenaming:self];
 }
 
 - (IBAction)groupSelection:(id)sender
@@ -188,7 +198,7 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
         selectedRows = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, self.tableView.numberOfRows)];
     }
     
-    NSLog(@"F : %s / %@ -> %@", __FUNCTION__, selectedRows, ((NSTextFieldCell * )self.groupName.cell).stringValue);
+    FRLog(@"F : %s / %@ -> %@", __FUNCTION__, selectedRows, ((NSTextFieldCell * )self.groupName.cell).stringValue);
     
     NSUInteger indexes[selectedRows.count];
     [selectedRows getIndexes:indexes
@@ -203,11 +213,12 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
     
     [self.tableView reloadDataForRowIndexes:selectedRows
                               columnIndexes:[NSIndexSet indexSetWithIndex:[self.tableView columnWithIdentifier:@"groupName"]]];
+    if (autoPreview) [self previewRenaming:self];
 }
 
 -(BOOL)selectionShouldChangeInTableView:(NSTableView *)tableView
 {
-    NSLog(@"%s : clickedColumn %ld", __FUNCTION__, [tableView clickedColumn]);
+    FRLog(@"%s : clickedColumn %ld", __FUNCTION__, [tableView clickedColumn]);
     if ([tableView clickedColumn] == [self.tableView columnWithIdentifier:@"selected"])
     {
         return NO;
@@ -255,7 +266,7 @@ writeRowsWithIndexes:(NSIndexSet *)rowIndexes
     BOOL accepted = NO;
     NSPasteboard* pboard = [info draggingPasteboard];
     
-    NSLog(@"%@", pboard.types);
+    FRLog(@"%@", pboard.types);
     
     if ([[pboard types] containsObject:NSFilenamesPboardType])
     {
@@ -297,18 +308,25 @@ writeRowsWithIndexes:(NSIndexSet *)rowIndexes
 #pragma mark
 #pragma mark TokenField Delegate Methods
 
--(NSString *)tokenField:(NSTokenField *)tokenField editingStringForRepresentedObject:(id)representedObject
+-(NSString *)tokenField:(NSTokenField *)tokenField
+editingStringForRepresentedObject:(id)representedObject
 {
     FRSpecialToken * token = (FRSpecialToken *) representedObject;
-    NSLog(@"F : %s / %@", __FUNCTION__, token.string);
+    FRLog(@"F : %s / %@", __FUNCTION__, token.string);
+    
+    
+    FRLog(@"Responder chain %@", self.window.firstResponder);
+    
     return token.string;
 }
 
--(NSString *)tokenField:(NSTokenField *)tokenField displayStringForRepresentedObject:(id)representedObject
+-(NSString *)tokenField:(NSTokenField *)tokenField
+displayStringForRepresentedObject:(id)representedObject
 {
     FRSpecialToken * token = (FRSpecialToken *) representedObject;
     NSString * tokenString = token.string;
-    NSLog(@"F : %s / %@", __FUNCTION__, tokenString);
+    FRLog(@"F : %s / %@", __FUNCTION__, tokenString);
+    
     return tokenString;
 }
 
@@ -316,14 +334,16 @@ writeRowsWithIndexes:(NSIndexSet *)rowIndexes
 menuForRepresentedObject:(id)representedObject
 {
     FRSpecialToken * token = (FRSpecialToken *) representedObject;
-    NSLog(@"F : %s / %@", __FUNCTION__, token.menu.title);
+    FRLog(@"F : %s / %@", __FUNCTION__, token.menu.title);
+    
     return token.menu;
 }
 - (BOOL)tokenField:(NSTokenField *)tokenField
 hasMenuForRepresentedObject:(id)representedObject
 {
     FRSpecialToken * token = (FRSpecialToken *) representedObject;
-    NSLog(@"F : %s : %@", __FUNCTION__, token.string);
+    FRLog(@"F : %s : %@", __FUNCTION__, token.string);
+    
     return (token.menu != nil);
 }
 
@@ -331,30 +351,32 @@ hasMenuForRepresentedObject:(id)representedObject
 representedObjectForEditingString:(NSString *)editingString
 {
     FRSpecialToken * token = [[FRSpecialToken alloc] initWithString:editingString];
-    NSLog(@"F : %s / %@", __FUNCTION__, editingString);
+    FRLog(@"F : %s / %@", __FUNCTION__, editingString);
+
     return token;
 }
 
 -(NSTokenStyle)tokenField:(NSTokenField *)tokenField
 styleForRepresentedObject:(id)representedObject
 {
-    NSLog(@"F : %s", __FUNCTION__);
+    FRLog(@"F : %s", __FUNCTION__);
     FRSpecialToken * token = (FRSpecialToken *) representedObject;
+    
     if (token.tokenType==FRTokenTypeUser)
     {
         return NSPlainTextTokenStyle;
     }
+    
     return NSRoundedTokenStyle;
 }
 
 - (IBAction)addTokenField:(NSButton *)sender
 {
     FRSpecialToken * token = [[FRSpecialToken alloc] initWithString:[@"\x1B" stringByAppendingString:sender.title]];
-    _fileNameFormatTokenField.objectValue = [_fileNameFormatTokenField.objectValue arrayByAddingObject:token];
-    
-    if (self.autoPreview)
-        [self previewRenaming:nil];
-    
+    token.owner = self;
+    _fileNameFormatTokenField.objectValue = [_fileNameFormatTokenField.objectValue
+                                             arrayByAddingObject:token];
+    if (autoPreview) [self previewRenaming:self];
 }
 
 @synthesize autoPreview;
@@ -363,7 +385,6 @@ styleForRepresentedObject:(id)representedObject
     [model calculateAllNewNamesWithTokens:_fileNameFormatTokenField.objectValue];
     [self.tableView reloadDataForRowIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, self.tableView.numberOfRows)]
                               columnIndexes:[NSIndexSet indexSetWithIndex:[self.tableView columnWithIdentifier:@"newFileName"]]];
-    
 }
 
 - (void)moveSelectionUp
@@ -381,6 +402,7 @@ styleForRepresentedObject:(id)representedObject
     [toIndexes addIndexes:fromIndexes];
     [self.tableView reloadDataForRowIndexes:toIndexes
                               columnIndexes:columnIndexes];
+    if (autoPreview) [self previewRenaming:self];
 }
 
 - (void)moveSelectionDown
@@ -398,6 +420,7 @@ styleForRepresentedObject:(id)representedObject
     [toIndexes addIndexes:fromIndexes];
     [self.tableView reloadDataForRowIndexes:toIndexes
                               columnIndexes:columnIndexes];
+    if (autoPreview) [self previewRenaming:self];
 }
 
 

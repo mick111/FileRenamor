@@ -7,6 +7,7 @@
 //
 
 #import "FRTableView.h"
+#import "FRAppDelegate.h"
 
 @implementation FRTableView
 
@@ -14,6 +15,8 @@
 
 - (void)keyDown:(NSEvent *)theEvent
 {
+    FRLog(@"%s",__FUNCTION__);
+    
     unichar character = ((theEvent.type == NSKeyDown) && ([theEvent.characters length])) ? [theEvent.characters characterAtIndex:0] : 0;
     if ((character == NSBackspaceCharacter) ||
         (character == NSDeleteCharacter))
@@ -25,12 +28,13 @@
     {
         if (theEvent.modifierFlags & NSCommandKeyMask)
         {
-            NSLog(@"TableView %s CMD+UP/DOWN", __FUNCTION__);
             if (character == NSUpArrowFunctionKey)
                 [owner moveSelectionUp];
             else
                 [owner moveSelectionDown];
         }
+        else
+            [super keyDown:theEvent];
     }
     else
         [super keyDown:theEvent];

@@ -36,7 +36,7 @@
     if (![nib instantiateWithOwner:owner
                    topLevelObjects:&arrayOfViews])
     {
-        NSLog(@"Cannot instanciate view from %@", nibName);
+        FRLog(@"Cannot instanciate view from %@", nibName);
         return nil;
     }
     

@@ -7,6 +7,7 @@
 //
 
 #import "FRModel.h"
+#import "FRAppDelegate.h"
 
 @implementation FRFile
 
@@ -159,10 +160,6 @@
     
     NSFileManager* fileManager = [NSFileManager defaultManager];
     
-    /* NSDirectoryEnumerationSkipsSubdirectoryDescendants
-     NSDirectoryEnumerationSkipsPackageDescendants
-     NSDirectoryEnumerationSkipsHiddenFiles */
-    
     for (NSURL * url in urls)
     {
         BOOL isDirectory;
@@ -172,7 +169,7 @@
         
         if (!fileExists)
         {
-            NSLog(@"URL %@ does not exist", url);
+            FRLog(@"URL %@ does not exist", url);
             continue;
         }
         
@@ -184,8 +181,8 @@
                                  options:options
                             errorHandler:^BOOL(NSURL * url, NSError *error)
              {
-                 NSLog(@"  -- URL %@", url.path);
-                 NSLog(@"  -- ERROR %@", error);
+                 FRLog(@"  -- URL %@", url.path);
+                 FRLog(@"  -- ERROR %@", error);
                  return YES;
              }];
             for (NSURL * urla in directoryEnumerator)
@@ -196,7 +193,7 @@
                 
                 if (!fileExists)
                 {
-                    NSLog(@"URL %@ does not exist", urla);
+                    FRLog(@"URL %@ does not exist", urla);
                     continue;
                 }
                 if (!isDirectory)
@@ -379,7 +376,7 @@
 
 -(BOOL)calculateAllNewNamesWithTokens:(NSArray *)arrayOfTokens
 {
-    NSLog(@"%s : %@", __FUNCTION__, arrayOfTokens);
+    FRLog(@"%s : %@", __FUNCTION__, arrayOfTokens);
     NSUInteger currentFileNb = 0;
     BOOL fileNameHaveChanged = NO;
     for (FRFile * file in _arrayOfFiles)
@@ -456,7 +453,7 @@
     [indexes enumerateIndexesWithOptions:NSEnumerationReverse
                               usingBlock:^(NSUInteger idx, BOOL *stop)
      {
-         NSLog(@"Treating index %ld", idx);
+         FRLog(@"Treating index %ld", idx);
          if (forbidenIndex != idx) {
              [_arrayOfFiles exchangeObjectAtIndex:(idx+1) withObjectAtIndex:idx];
              [newIndexes addIndex:(idx+1)];
@@ -477,7 +474,7 @@
     NSMutableIndexSet * newIndexes = [[NSMutableIndexSet alloc] init];
     [indexes enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop)
      {
-         NSLog(@"Treating index %ld", idx);
+         FRLog(@"Treating index %ld", idx);
          if (forbidenIndex != idx) {
              [_arrayOfFiles exchangeObjectAtIndex:(idx-1) withObjectAtIndex:idx];
              [newIndexes addIndex:(idx-1)];

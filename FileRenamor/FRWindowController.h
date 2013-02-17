@@ -9,8 +9,10 @@
 #import <Cocoa/Cocoa.h>
 #import "FRModel.h"
 #import "FRTableView.h"
+#import "FRTokenField.h"
 
 @class FRTableView;
+@class FRModel;
 
 @interface FRWindowController : NSWindowController <NSTableViewDataSource, NSTableViewDelegate, NSTokenFieldDelegate>
 {
@@ -33,7 +35,7 @@
 
 @property (weak) IBOutlet NSTextField *groupName;
 
-@property (weak) IBOutlet NSTokenField *fileNameFormatTokenField;
+@property (weak) IBOutlet FRTokenField *fileNameFormatTokenField;
 - (IBAction)addTokenField:(NSButton *)sender;
 
 @property BOOL autoPreview;

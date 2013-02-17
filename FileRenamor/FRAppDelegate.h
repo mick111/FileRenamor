@@ -9,6 +9,8 @@
 #import <Cocoa/Cocoa.h>
 #import "FRWindowController.h"
 
+#define FRLog(...) /*NSLog(__VA_ARGS__)*/
+
 @interface FRAppDelegate : NSObject <NSApplicationDelegate>
 @property (assign) IBOutlet NSWindow *window;
 @property (unsafe_unretained) IBOutlet FRWindowController *windowController;
