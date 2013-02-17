@@ -27,6 +27,7 @@
 		4121C333166D4F9A00883DFE /* FROpenAdditionalOption.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FROpenAdditionalOption.xib; sourceTree = "<group>"; };
 		41229A4A16D18AED00807167 /* FRTokenField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRTokenField.h; sourceTree = "<group>"; };
 		41229A4B16D18AED00807167 /* FRTokenField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRTokenField.m; sourceTree = "<group>"; };
+		41229A4D16D1A32D00807167 /* FileRenamor.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = FileRenamor.zip; sourceTree = "<group>"; };
 		412B2EEF16306EC900E5251C /* FileRenamor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FileRenamor.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		412B2EF316306EC900E5251C /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		412B2EF616306EC900E5251C /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -143,6 +144,7 @@
 		41EDF154163D76E400CC5F89 /* build */ = {
 			isa = PBXGroup;
 			children = (
+				41229A4D16D1A32D00807167 /* FileRenamor.zip */,
 				41EDF155163D76E400CC5F89 /* FileRenamor.app */,
 			);
 			name = build;
