@@ -28,6 +28,9 @@
 - (IBAction)groupSelection:(id)sender;
 - (IBAction)previewRenaming:(id)sender;
 
+- (void)moveSelectionUp;
+- (void)moveSelectionDown;
+
 @property (weak) IBOutlet NSTextField *groupName;
 
 @property (weak) IBOutlet NSTokenField *fileNameFormatTokenField;

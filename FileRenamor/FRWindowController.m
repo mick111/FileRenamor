@@ -366,6 +366,39 @@ styleForRepresentedObject:(id)representedObject
     
 }
 
+- (void)moveSelectionUp
+{
+    NSIndexSet *fromIndexes, *columnIndexes;
+    NSMutableIndexSet *toIndexes;
+    fromIndexes = self.tableView.selectedRowIndexes;
+    toIndexes   = [model moveFilesUp:fromIndexes];
+    
+    [self.tableView selectRowIndexes:toIndexes
+                byExtendingSelection:FALSE];
+    
+    columnIndexes = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, self.tableView.numberOfColumns)];
+    
+    [toIndexes addIndexes:fromIndexes];
+    [self.tableView reloadDataForRowIndexes:toIndexes
+                              columnIndexes:columnIndexes];
+}
+
+- (void)moveSelectionDown
+{
+    NSIndexSet *fromIndexes, *columnIndexes;
+    NSMutableIndexSet *toIndexes;
+    fromIndexes = self.tableView.selectedRowIndexes;
+    toIndexes   = [model moveFilesDown:fromIndexes];
+    
+    [self.tableView selectRowIndexes:toIndexes
+                byExtendingSelection:FALSE];
+    
+    columnIndexes = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, self.tableView.numberOfColumns)];
+    
+    [toIndexes addIndexes:fromIndexes];
+    [self.tableView reloadDataForRowIndexes:toIndexes
+                              columnIndexes:columnIndexes];
+}
 
 
 @end

@@ -1,7 +1,6 @@
 FileRenamor
 ===========
 To be done :
-- [up/down buttons] optional, prefer usage of cmd+up/down
 - [drag and drop folders/recursive folder] optional
 - instantaneous name calculation (when token field is modified, when table view is modified)
 - [validate regexp / replace & tokenField user entries (forbiden character)] optional

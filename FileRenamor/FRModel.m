@@ -448,4 +448,47 @@
 {
     [_arrayOfFiles sortUsingDescriptors:sortDescriptors];
 }
+
+-(NSMutableIndexSet*)moveFilesDown:(NSIndexSet*)indexes;
+{
+    NSUInteger __block forbidenIndex = ([_arrayOfFiles count]-1);
+    NSMutableIndexSet * newIndexes = [[NSMutableIndexSet alloc] init];
+    [indexes enumerateIndexesWithOptions:NSEnumerationReverse
+                              usingBlock:^(NSUInteger idx, BOOL *stop)
+     {
+         NSLog(@"Treating index %ld", idx);
+         if (forbidenIndex != idx) {
+             [_arrayOfFiles exchangeObjectAtIndex:(idx+1) withObjectAtIndex:idx];
+             [newIndexes addIndex:(idx+1)];
+         }
+         else
+         {
+             [newIndexes addIndex:idx];
+         }
+         forbidenIndex--;
+     }];
+    
+    return newIndexes;
+}
+
+-(NSMutableIndexSet*)moveFilesUp:(NSIndexSet*)indexes
+{
+    NSUInteger __block forbidenIndex = 0;
+    NSMutableIndexSet * newIndexes = [[NSMutableIndexSet alloc] init];
+    [indexes enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop)
+     {
+         NSLog(@"Treating index %ld", idx);
+         if (forbidenIndex != idx) {
+             [_arrayOfFiles exchangeObjectAtIndex:(idx-1) withObjectAtIndex:idx];
+             [newIndexes addIndex:(idx-1)];
+         }
+         else
+         {
+             [newIndexes addIndex:idx];
+         }
+         forbidenIndex++;
+    }];
+    
+    return newIndexes;
+}
 @end

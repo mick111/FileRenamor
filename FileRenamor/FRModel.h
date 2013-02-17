@@ -47,7 +47,6 @@
 /* Return nil if index is incorrect */
 - (NSURL *)getFileAtIndex:(NSUInteger)index;
 
-/* Return true if okay */
 - (NSIndexSet *)moveFilesFromPositions:(NSIndexSet*)fromPosition toPosition:(NSUInteger)toPosition;
 
 - (BOOL)removeFilesAtIndexes:(NSIndexSet*)indexes;
@@ -63,4 +62,8 @@
 
 /* Apply renaming */
 -(void)applyRenaming:(BOOL)removeWhenFinished;
+
+/* File moving */
+-(NSMutableIndexSet*)moveFilesUp:(NSIndexSet*)indexes;
+-(NSMutableIndexSet*)moveFilesDown:(NSIndexSet*)indexes;
 @end
