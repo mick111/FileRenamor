@@ -24,6 +24,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4121996516D6B18A00B61DAB /* FileRenamor_Debug.app */ = {isa = PBXFileReference; lastKnownFileType = wrapper.application; path = FileRenamor_Debug.app; sourceTree = "<group>"; };
+		4121996616D6B18A00B61DAB /* FileRenamor_Debug.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = FileRenamor_Debug.zip; sourceTree = "<group>"; };
 		4121C333166D4F9A00883DFE /* FROpenAdditionalOption.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FROpenAdditionalOption.xib; sourceTree = "<group>"; };
 		41229A4A16D18AED00807167 /* FRTokenField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FRTokenField.h; sourceTree = "<group>"; };
 		41229A4B16D18AED00807167 /* FRTokenField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FRTokenField.m; sourceTree = "<group>"; };
@@ -144,6 +146,8 @@
 		41EDF154163D76E400CC5F89 /* build */ = {
 			isa = PBXGroup;
 			children = (
+				4121996516D6B18A00B61DAB /* FileRenamor_Debug.app */,
+				4121996616D6B18A00B61DAB /* FileRenamor_Debug.zip */,
 				41229A4D16D1A32D00807167 /* FileRenamor.zip */,
 				41EDF155163D76E400CC5F89 /* FileRenamor.app */,
 			);
