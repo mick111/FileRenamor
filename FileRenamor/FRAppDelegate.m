@@ -30,15 +30,41 @@
 + (NSView *)loadMainViewFromNib:(NSString *)nibName
                       withOwner:(id)owner
 {
+    
+    SInt32 major = 0;
+    SInt32 minor = 0;
+    Gestalt(gestaltSystemVersionMajor, &major);
+    Gestalt(gestaltSystemVersionMinor, &minor);
+    
+    
+    FRLog(@"%s : Args : %@, %@", __FUNCTION__, nibName, [owner class]);
     NSNib * nib = [[NSNib alloc] initWithNibNamed:nibName
                                            bundle:nil];
+    
+    FRLog(@"%s : Nib %@", __FUNCTION__, nib);
     NSArray * arrayOfViews;
-    if (![nib instantiateWithOwner:owner
-                   topLevelObjects:&arrayOfViews])
+    
+    BOOL instanciated = FALSE;
+    
+    if (major == 10 && (minor <= 7 && minor >= 3))
+    {
+        instanciated = [nib instantiateNibWithOwner:owner
+                                    topLevelObjects:&arrayOfViews];
+    }
+    else if ((major == 10 && minor >= 7) || minor >= 11)
+    {
+        instanciated = [nib instantiateWithOwner:owner
+                                 topLevelObjects:&arrayOfViews];
+    }
+    
+    if (!instanciated)
     {
         FRLog(@"Cannot instanciate view from %@", nibName);
         return nil;
     }
+    
+    
+    
     
     for (id object in arrayOfViews)
     {
